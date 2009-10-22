@@ -350,7 +350,8 @@ bool COgreMeshFileLoader::readSubMesh(io::IReadFile* file, ChunkData& parent, Og
 		parent.read += data.read;
 	}
 
-	while(parent.read < parent.header.length)
+	//while(parent.read < parent.header.length) <- old irrlicht code, did not properly read all submesh tokens
+	while(file->getPos() < file->getSize()) // <- keep reading until we get a non-submesh token (the parent.header.length seems to be inaccurate and may not include all following submesh tokens)
 	{
 		ChunkData data;
 		readChunkData(file, data);
