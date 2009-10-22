@@ -117,6 +117,14 @@ IWriteFile* createWriteFile(const io::path& fileName, bool append)
 	return 0;
 }
 
+void CWriteFile::close()
+{
+	if (File)
+	{
+		fclose(File);
+		File = 0;
+	}
+}
 
 } // end namespace io
 } // end namespace irr

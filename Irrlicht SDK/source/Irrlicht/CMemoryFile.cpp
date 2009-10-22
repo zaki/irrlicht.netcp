@@ -116,6 +116,10 @@ IReadFile* createMemoryReadFile(void* memory, long size, const io::path& fileNam
 	return file;
 }
 
+void CMemoryFile::close()
+{
+	// Do nothing
+}
 
 } // end namespace io
 } // end namespace irr

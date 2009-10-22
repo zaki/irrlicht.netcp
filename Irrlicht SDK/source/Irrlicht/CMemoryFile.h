@@ -46,6 +46,9 @@ namespace io
 		//! returns name of file
 		virtual const io::path& getFileName() const;
 
+		//! closes the file
+		virtual void close();
+
 	private:
 
 		void *Buffer;

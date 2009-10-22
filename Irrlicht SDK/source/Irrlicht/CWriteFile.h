@@ -41,6 +41,9 @@ namespace io
 		//! returns if file is open
 		bool isOpen() const;
 
+		//! closes the file
+		virtual void close();
+
 	private:
 
 		//! opens the file
