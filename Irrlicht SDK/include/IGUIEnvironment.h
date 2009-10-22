@@ -10,6 +10,7 @@
 #include "rect.h"
 #include "EMessageBoxFlags.h"
 #include "IEventReceiver.h"
+#include "IVideoDriver.h"
 #include "IXMLReader.h"
 #include "path.h"
 
@@ -38,6 +39,7 @@ class IGUIElement;
 class IGUIFont;
 class IGUISpriteBank;
 class IGUIScrollBar;
+class IGUIProgressBar;
 class IGUIImage;
 class IGUIMeshViewer;
 class IGUICheckBox;
@@ -256,6 +258,18 @@ public:
 	occured. This pointer should not be dropped. See
 	IReferenceCounted::drop() for more information. */
 	virtual IGUIScrollBar* addScrollBar(bool horizontal, const core::rect<s32>& rectangle,
+		IGUIElement* parent=0, s32 id=-1) = 0;
+
+	//! Adds a progressbar.
+	/** \param horizontal Specifies if the progress bar is drawn horizontal
+	or vertical.
+	\param rectangle Rectangle specifying the borders of the progressbar.
+	\param parent Parent gui element of the progress bar.
+	\param id Id to identify the gui element.
+	\return Pointer to the created progressbar. Returns 0 if an error
+	occured. This pointer should not be dropped. See
+	IReferenceCounted::drop() for more information. */
+	virtual IGUIProgressBar* addProgressBar(bool horizontal, const core::rect<s32>& rectangle,
 		IGUIElement* parent=0, s32 id=-1) = 0;
 
 	//! Adds an image element.

@@ -88,6 +88,7 @@
 #include "IGUIListBox.h"
 #include "IGUIMeshViewer.h"
 #include "IGUIScrollBar.h"
+#include "IGUIProgressBar.h"
 #include "IGUISkin.h"
 #include "IGUISpinBox.h"
 #include "IGUISpriteBank.h"

@@ -102,6 +102,10 @@ public:
 	virtual IGUIScrollBar* addScrollBar(bool horizontal, const core::rect<s32>& rectangle,
 		IGUIElement* parent=0, s32 id=-1);
 
+	//! adds a progressbar. The returned pointer must not be dropped.
+	virtual IGUIProgressBar* addProgressBar(bool horizontal, const core::rect<s32>& rectangle,
+		IGUIElement* parent=0, s32 id=-1);
+
 	//! Adds an image element.
 	virtual IGUIImage* addImage(video::ITexture* image, core::position2d<s32> pos,
 		bool useAlphaChannel=true, IGUIElement* parent=0, s32 id=-1, const wchar_t* text=0);

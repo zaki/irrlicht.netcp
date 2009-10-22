@@ -13,6 +13,7 @@
 #include "CGUIButton.h"
 #include "CGUIWindow.h"
 #include "CGUIScrollBar.h"
+#include "CGUIProgressBar.h"
 #include "CGUIFont.h"
 #include "CGUISpriteBank.h"
 #include "CGUIImage.h"
@@ -1016,6 +1017,14 @@ IGUIWindow* CGUIEnvironment::addMessageBox(const wchar_t* caption, const wchar_t
 IGUIScrollBar* CGUIEnvironment::addScrollBar(bool horizontal, const core::rect<s32>& rectangle, IGUIElement* parent, s32 id)
 {
 	IGUIScrollBar* bar = new CGUIScrollBar(horizontal, this, parent ? parent : this, id, rectangle);
+	bar->drop();
+	return bar;
+}
+
+//! adds a progressbar. The returned pointer must not be dropped.
+IGUIProgressBar* CGUIEnvironment::addProgressBar(bool horizontal, const core::rect<s32>& rectangle, IGUIElement* parent, s32 id)
+{
+	IGUIProgressBar* bar = new CGUIProgressBar(horizontal, this, parent ? parent : this, id, rectangle);
 	bar->drop();
 	return bar;
 }

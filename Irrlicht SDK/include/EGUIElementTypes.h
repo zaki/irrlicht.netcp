@@ -61,6 +61,9 @@ enum EGUI_ELEMENT_TYPE
 	//! A scroll bar (IGUIScrollBar)
 	EGUIET_SCROLL_BAR,
 
+	//! A progress bar (IGUIProgressBar)
+	EGUIET_PROGRESS_BAR,
+
 	//! A spin box (IGUISpinBox)
 	EGUIET_SPIN_BOX,
 

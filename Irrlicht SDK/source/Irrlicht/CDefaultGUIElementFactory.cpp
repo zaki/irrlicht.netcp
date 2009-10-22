@@ -20,6 +20,7 @@
 #include "IGUIListBox.h"
 #include "IGUIMeshViewer.h"
 #include "IGUIScrollBar.h"
+#include "IGUIProgressBar.h"
 #include "IGUISpinBox.h"
 #include "IGUIStaticText.h"
 #include "IGUITabControl.h"
@@ -80,6 +81,8 @@ IGUIElement* CDefaultGUIElementFactory::addGUIElement(EGUI_ELEMENT_TYPE type, IG
 			return Environment->addMessageBox(0,0,false,0,parent);
 		case EGUIET_SCROLL_BAR:
 			return Environment->addScrollBar(false,core::rect<s32>(0,0,100,100),parent);
+		case EGUIET_PROGRESS_BAR:
+			return Environment->addProgressBar(false,core::rect<s32>(0,0,100,100),parent);
 		case EGUIET_STATIC_TEXT:
 			return Environment->addStaticText(0,core::rect<s32>(0,0,100,100),false,true,parent);
 		case EGUIET_TAB:
