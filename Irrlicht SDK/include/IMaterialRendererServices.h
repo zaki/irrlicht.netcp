@@ -18,7 +18,11 @@ class IVideoDriver;
 
 
 //! Interface providing some methods for changing advanced, internal states of a IVideoDriver.
+#if VIREFERENCECOUNTED
+class IMaterialRendererServices : public virtual IReferenceCounted
+#else
 class IMaterialRendererServices
+#endif
 {
 public:
 
