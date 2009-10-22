@@ -118,8 +118,10 @@ namespace irr
 
 				if (!fullscreen)
 				{
-					BorderX = GetSystemMetrics(SM_CXDLGFRAME);
-					BorderY = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME);
+					//BorderX = GetSystemMetrics(SM_CXDLGFRAME);
+					//BorderY = GetSystemMetrics(SM_CYCAPTION) + GetSystemMetrics(SM_CYDLGFRAME);
+					BorderX = 0;
+					BorderY = GetSystemMetrics(SM_CYCAPTION);
 				}
 			}
 
