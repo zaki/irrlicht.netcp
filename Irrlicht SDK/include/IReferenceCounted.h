@@ -7,6 +7,21 @@
 
 #include "irrTypes.h"
 
+// TODO: These are copied from other Irrlicht header files but are repeated here
+// (instead of #included) to avoid complicating the #include file ordering. Eventually
+// these should be #defined in one place and #included wherever they are used, but
+// for now they are duplicated.
+#ifdef WIN32
+#define STDCALL __stdcall*
+#define uint unsigned int
+#else
+#define STDCALL *
+#endif
+typedef void* IntPtr;
+
+// Define a callback type to be invoked when a Drop operation is invoked
+typedef void (STDCALL DROPCALLBACK)(const IntPtr);
+
 namespace irr
 {
 
@@ -44,7 +59,7 @@ namespace irr
 
 		//! Constructor.
 		IReferenceCounted()
-			: DebugName(0), ReferenceCounter(1)
+			: DebugName(0), ReferenceCounter(1), IsCallbackDefined(false)
 		{
 		}
 
@@ -121,6 +136,10 @@ namespace irr
 			--ReferenceCounter;
 			if (!ReferenceCounter)
 			{
+				if(IsCallbackDefined)
+				{
+					_callback((void *)this);
+				}
 				delete this;
 				return true;
 			}
@@ -144,6 +163,13 @@ namespace irr
 			return DebugName;
 		}
 
+		//! Sets a callback to be executed when an referencecounted item is finally released
+		void setCallback(DROPCALLBACK call)
+		{
+			IsCallbackDefined = true;
+			_callback = call;
+		}
+
 	protected:
 
 		//! Sets the debug name of the object.
@@ -162,6 +188,9 @@ namespace irr
 
 		//! The reference counter. Mutable to do reference counting on const objects.
 		mutable s32 ReferenceCounter;
+
+		DROPCALLBACK _callback;
+		bool IsCallbackDefined;
 	};
 
 } // end namespace irr
