@@ -287,7 +287,7 @@ public:
 
 
 	//! Direct access operator
-	T& operator [](u32 index)
+	inline T& operator [](u32 index)
 	{
 		_IRR_DEBUG_BREAK_IF(index>=used) // access violation
 
@@ -296,7 +296,7 @@ public:
 
 
 	//! Direct const access operator
-	const T& operator [](u32 index) const
+	inline const T& operator [](u32 index) const
 	{
 		_IRR_DEBUG_BREAK_IF(index>=used) // access violation
 
@@ -324,7 +324,7 @@ public:
 
 	//! Gets a pointer to the array.
 	/** \return Pointer to the array. */
-	T* pointer()
+	inline T* pointer()
 	{
 		return data;
 	}
@@ -332,7 +332,7 @@ public:
 
 	//! Gets a const pointer to the array.
 	/** \return Pointer to the array. */
-	const T* const_pointer() const
+	inline const T* const_pointer() const
 	{
 		return data;
 	}
@@ -340,7 +340,7 @@ public:
 
 	//! Get number of occupied elements of the array.
 	/** \return Size of elements in the array which are actually occupied. */
-	u32 size() const
+	inline u32 size() const
 	{
 		return used;
 	}

@@ -125,9 +125,10 @@ void CSkinnedMesh::animateMesh(f32 frame, f32 blend)
 
 		//----------------
 		// Temp!
-		buildAll_LocalAnimatedMatrices();
+		//buildAll_LocalAnimatedMatrices();
 		//-----------------
 	}
+	buildAll_LocalAnimatedMatrices();
 
 	updateBoundingBox();
 }
