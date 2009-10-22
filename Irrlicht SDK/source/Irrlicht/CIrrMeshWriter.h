@@ -41,7 +41,7 @@ namespace scene
 
 		void writeBoundingBox(const core::aabbox3df& box);
 
-		void writeMeshBuffer(const scene::IMeshBuffer* buffer);
+		void writeMeshBuffer(const scene::IMeshBuffer* buffer, bool mirror=false);
 
 		void writeMaterial(const video::SMaterial& material);
 

@@ -59,7 +59,10 @@ namespace IrrlichtNETCP
         //! write in a way that does consume less disk space
         EMWF_WRITE_COMPRESSED = 0x2,
 
-        EMWF_WRITE_MIRRORED = 0x4
+        //! write in binary format rather than text
+        EMWF_WRITE_BINARY = 0x4,
 
+        //! mirror geometry left/right and reverse winding order to preserving front-faces
+        EMWF_WRITE_MIRRORED = 0x8
     }
 }

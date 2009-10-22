@@ -65,6 +65,7 @@ bool CIrrMeshWriter::writeMesh(io::IWriteFile* file, scene::IMesh* mesh, s32 fla
 		os::Printer::log("Could not write file", file->getFileName());
 		return false;
 	}
+	bool mir = ((flags & EMWF_WRITE_MIRRORED) != 0);
 
 	os::Printer::log("Writing mesh", file->getFileName());
 
@@ -99,7 +100,7 @@ bool CIrrMeshWriter::writeMesh(io::IWriteFile* file, scene::IMesh* mesh, s32 fla
 		scene::IMeshBuffer* buffer = mesh->getMeshBuffer(i);
 		if (buffer)
 		{
-			writeMeshBuffer(buffer);
+			writeMeshBuffer(buffer, ((flags & EMWF_WRITE_MIRRORED) != 0));
 			Writer->writeLineBreak();
 		}
 	}
@@ -145,7 +146,7 @@ core::stringw CIrrMeshWriter::getVectorAsStringLine(const core::vector2df& v) co
 }
 
 
-void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer)
+void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer, bool mirror)
 {
 	Writer->writeElement(L"buffer", false);
 	Writer->writeLineBreak();
@@ -178,6 +179,10 @@ void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer)
 			video::S3DVertex* vtx = (video::S3DVertex*)buffer->getVertices();
 			for (u32 j=0; j<vertexCount; ++j)
 			{
+				if(mirror)
+				{
+					vtx[j].Pos.X *= -1.0;
+				}
 				core::stringw str = getVectorAsStringLine(vtx[j].Pos);
 				str += L" ";
 				str += getVectorAsStringLine(vtx[j].Normal);
@@ -198,6 +203,10 @@ void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer)
 			video::S3DVertex2TCoords* vtx = (video::S3DVertex2TCoords*)buffer->getVertices();
 			for (u32 j=0; j<vertexCount; ++j)
 			{
+				if(mirror)
+				{
+					vtx[j].Pos.X *= -1.0;
+				}
 				core::stringw str = getVectorAsStringLine(vtx[j].Pos);
 				str += L" ";
 				str += getVectorAsStringLine(vtx[j].Normal);
@@ -220,6 +229,10 @@ void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer)
 			video::S3DVertexTangents* vtx = (video::S3DVertexTangents*)buffer->getVertices();
 			for (u32 j=0; j<vertexCount; ++j)
 			{
+				if(mirror)
+				{
+					vtx[j].Pos.X *= -1.0;
+				}
 				core::stringw str = getVectorAsStringLine(vtx[j].Pos);
 				str += L" ";
 				str += getVectorAsStringLine(vtx[j].Normal);
@@ -259,25 +272,55 @@ void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer)
 	const u32* idx32 = (u32*) buffer->getIndices();
 	const int maxIndicesPerLine = 25;
 
-	for (int i=0; i<indexCount; ++i)
+	if (!mirror || ((indexCount % 3) != 0))
 	{
-		if(iType == video::EIT_16BIT)
+		for (int i=0; i<indexCount; ++i)
 		{
-			core::stringw str((int)idx16[i]);
-			Writer->writeText(str.c_str());
-		}
-		else
-		{
-			core::stringw str((int)idx32[i]);
-			Writer->writeText(str.c_str());
-		}
-
-		if (i % maxIndicesPerLine != maxIndicesPerLine)
-		{
-			if (i % maxIndicesPerLine == maxIndicesPerLine-1)
-				Writer->writeLineBreak();
+			if(iType == video::EIT_16BIT)
+			{
+				core::stringw str((int)idx16[i]);
+				Writer->writeText(str.c_str());
+			}
 			else
-				Writer->writeText(L" ");
+			{
+				core::stringw str((int)idx32[i]);
+				Writer->writeText(str.c_str());
+			}
+
+			if (i % maxIndicesPerLine != maxIndicesPerLine)
+			{
+				if (i % maxIndicesPerLine == maxIndicesPerLine-1)
+					Writer->writeLineBreak();
+				else
+					Writer->writeText(L" ");
+			}
+		}
+	}
+	else
+	{
+		for (int i=0; i<indexCount; i+=3)
+		{
+			for (int j=i+2; j>=i; j--)
+			{
+				if(iType == video::EIT_16BIT)
+				{
+					core::stringw str((int)idx16[j]);
+					Writer->writeText(str.c_str());
+				}
+				else
+				{
+					core::stringw str((int)idx32[j]);
+					Writer->writeText(str.c_str());
+				}
+
+				if (i % maxIndicesPerLine != maxIndicesPerLine)
+				{
+					if (i % maxIndicesPerLine == maxIndicesPerLine-1)
+						Writer->writeLineBreak();
+					else
+						Writer->writeText(L" ");
+				}
+			}
 		}
 	}
 
