@@ -72,7 +72,11 @@ const c8* const PIXEL_SHADER_TYPE_NAMES[] = {
 	0 };
 
 //! Interface making it possible to create and use programs running on the GPU.
+#ifdef VIREFERENCECOUNTED
+class IGPUProgrammingServices : public virtual IReferenceCounted
+#else
 class IGPUProgrammingServices
+#endif
 {
 public:
 

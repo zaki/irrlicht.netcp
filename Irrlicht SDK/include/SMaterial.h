@@ -186,7 +186,11 @@ namespace video
 	const u32 MATERIAL_MAX_TEXTURES = _IRR_MATERIAL_MAX_TEXTURES_;
 
 	//! Struct for holding parameters for a material renderer
-	class SMaterial
+#ifdef VIREFERENCECOUNTED
+	class SMaterial : public virtual IReferenceCounted
+#else
+ 	class SMaterial
+#endif
 	{
 	public:
 		//! Default constructor. Creates a solid, lit material with white colors
