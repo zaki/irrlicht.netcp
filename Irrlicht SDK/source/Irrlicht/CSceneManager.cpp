@@ -2072,7 +2072,7 @@ bool CSceneManager::saveScene(io::IWriteFile* file, ISceneUserDataSerializer* us
 
 //! Loads a scene. Note that the current scene is not cleared before.
 //! \param filename: Name of the file .
-bool CSceneManager::loadScene(const io::path& filename, ISceneUserDataSerializer* userDataSerializer)
+bool CSceneManager::loadScene(const io::path& filename, ISceneUserDataSerializer* userDataSerializer, ISceneNode* parent)
 {
 	bool ret = false;
 	io::IReadFile* read = FileSystem->createAndOpenFile(filename);
@@ -2082,7 +2082,7 @@ bool CSceneManager::loadScene(const io::path& filename, ISceneUserDataSerializer
 	}
 	else
 	{
-		ret = loadScene(read, userDataSerializer);
+		ret = loadScene(read, userDataSerializer, parent);
 		read->drop();
 	}
 
@@ -2092,7 +2092,7 @@ bool CSceneManager::loadScene(const io::path& filename, ISceneUserDataSerializer
 
 
 //! Loads a scene. Note that the current scene is not cleared before.
-bool CSceneManager::loadScene(io::IReadFile* file, ISceneUserDataSerializer* userDataSerializer)
+bool CSceneManager::loadScene(io::IReadFile* file, ISceneUserDataSerializer* userDataSerializer, ISceneNode* parent)
 {
 	if (!file)
 	{
@@ -2118,7 +2118,7 @@ bool CSceneManager::loadScene(io::IReadFile* file, ISceneUserDataSerializer* use
 
 	while(reader->read())
 	{
-		readSceneNode(reader, 0, userDataSerializer);
+		readSceneNode(reader, parent, userDataSerializer);
 	}
 
 	// restore old collada parameters
@@ -2193,7 +2193,7 @@ void CSceneManager::readSceneNode(io::IXMLReader* reader, ISceneNode* parent, IS
 			if ((IRR_XML_FORMAT_NODE==reader->getNodeName()) ||
 				(IRR_XML_FORMAT_SCENE==reader->getNodeName()))
 			{
-				readSceneNode(reader, node, userDataSerializer);
+				readSceneNode(reader, node ? node : parent, userDataSerializer);
 			}
 			else
 			{

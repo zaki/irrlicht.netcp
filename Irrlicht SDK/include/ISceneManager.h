@@ -1420,7 +1420,7 @@ namespace scene
 		as parameter here. Otherwise, simply specify 0 as this
 		parameter.
 		\return True if successful. */
-		virtual bool loadScene(const io::path& filename, ISceneUserDataSerializer* userDataSerializer=0) = 0;
+		virtual bool loadScene(const io::path& filename, ISceneUserDataSerializer* userDataSerializer=0, ISceneNode* parent=0) = 0;
 
 		//! Loads a scene. Note that the current scene is not cleared before.
 		/** The scene is usually load from an .irr file, an xml based format. .irr files can
@@ -1433,7 +1433,7 @@ namespace scene
 		as parameter here. Otherwise, simply specify 0 as this
 		parameter.
 		\return True if successful. */
-		virtual bool loadScene(io::IReadFile* file, ISceneUserDataSerializer* userDataSerializer=0) = 0;
+		virtual bool loadScene(io::IReadFile* file, ISceneUserDataSerializer* userDataSerializer=0, ISceneNode* parent=0) = 0;
 
 		//! Get a mesh writer implementation if available
 		/** Note: You need to drop() the pointer after use again, see IReferenceCounted::drop()
