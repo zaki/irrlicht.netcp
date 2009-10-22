@@ -185,7 +185,13 @@ void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer, bool mirr
 				}
 				core::stringw str = getVectorAsStringLine(vtx[j].Pos);
 				str += L" ";
-				str += getVectorAsStringLine(vtx[j].Normal);
+				core::stringw strNormalValue = getVectorAsStringLine(vtx[j].Normal);
+				if(strNormalValue.find("#IND") != -1)
+				{
+					vtx[j].Normal.set(0.0, 1.0, 0.0);
+					strNormalValue = getVectorAsStringLine(vtx[j].Normal);
+				}
+				str += strNormalValue;
 
 				char tmp[12];
 				sprintf(tmp, " %02x%02x%02x%02x ", vtx[j].Color.getAlpha(), vtx[j].Color.getRed(), vtx[j].Color.getBlue(), vtx[j].Color.getGreen());
@@ -209,7 +215,13 @@ void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer, bool mirr
 				}
 				core::stringw str = getVectorAsStringLine(vtx[j].Pos);
 				str += L" ";
-				str += getVectorAsStringLine(vtx[j].Normal);
+				core::stringw strNormalValue = getVectorAsStringLine(vtx[j].Normal);
+				if(strNormalValue.find("#IND") != -1)
+				{
+					vtx[j].Normal.set(0.0, 1.0, 0.0);
+					strNormalValue = getVectorAsStringLine(vtx[j].Normal);
+				}
+				str += strNormalValue;
 
 				char tmp[12];
 				sprintf(tmp, " %02x%02x%02x%02x ", vtx[j].Color.getAlpha(), vtx[j].Color.getRed(), vtx[j].Color.getBlue(), vtx[j].Color.getGreen());
@@ -235,7 +247,13 @@ void CIrrMeshWriter::writeMeshBuffer(const scene::IMeshBuffer* buffer, bool mirr
 				}
 				core::stringw str = getVectorAsStringLine(vtx[j].Pos);
 				str += L" ";
-				str += getVectorAsStringLine(vtx[j].Normal);
+				core::stringw strNormalValue = getVectorAsStringLine(vtx[j].Normal);
+				if(strNormalValue.find("#IND") != -1)
+				{
+					vtx[j].Normal.set(0.0, 1.0, 0.0);
+					strNormalValue = getVectorAsStringLine(vtx[j].Normal);
+				}
+				str += strNormalValue;
 
 				char tmp[12];
 				sprintf(tmp, " %02x%02x%02x%02x ", vtx[j].Color.getAlpha(), vtx[j].Color.getRed(), vtx[j].Color.getBlue(), vtx[j].Color.getGreen());
