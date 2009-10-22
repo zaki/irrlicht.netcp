@@ -877,7 +877,7 @@ void CGUIEditBox::draw()
 void CGUIEditBox::setText(const wchar_t* text)
 {
 	Text = text;
-	CursorPos = 0;
+	CursorPos = Text.size();
 	HScrollPos = 0;
 	breakText();
 }
