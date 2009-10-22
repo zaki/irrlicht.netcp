@@ -165,7 +165,15 @@ namespace scene
 				vertex.Normal.set(0.0f, 1.0f, 0.0f);
 				vertex.Color = vertexColor;
 				vertex.Pos.X = fx;
-				vertex.Pos.Y = (f32) heightMap->getPixel(TerrainData.Size-x-1,z).getLuminance();
+				if (heightMap->getColorFormat() == video::ECF_A8R8G8B8)
+				{
+					u32 y = heightMap->getPixel((TerrainData.Size-1)-x,z).color;
+					vertex.Pos.Y = *(f32*)&y;
+				}
+				else
+				{
+					vertex.Pos.Y = (f32) heightMap->getPixel((TerrainData.Size-1)-x,z).getLuminance();
+				}
 				vertex.Pos.Z = fz;
 
 				vertex.TCoords.X = vertex.TCoords2.X = 1.f-fx2;
@@ -1100,11 +1108,32 @@ namespace scene
 			{
 				for (s32 x = 1; x < TerrainData.Size - 1; ++x)
 				{
+					f32 old_y = mb->getVertexBuffer()[x + yd].Pos.Y;
+					f32 treshold = 1.5f;
+
+					int p = 1;
+					f32 x_1y = mb->getVertexBuffer()[x-1 + yd].Pos.Y;
+					f32 x1y  = mb->getVertexBuffer()[x+1 + yd].Pos.Y;
+					f32 xy_1 = mb->getVertexBuffer()[x   + yd - TerrainData.Size].Pos.Y;
+					f32 xy1  = mb->getVertexBuffer()[x   + yd + TerrainData.Size].Pos.Y;
+
+					f32 res  = old_y; 
+					if (old_y - x_1y > -treshold && old_y - x_1y < treshold) { res += x_1y; p++; }
+					if (old_y - x1y  > -treshold && old_y - x1y  < treshold) { res += x1y; p++; }
+					if (old_y - xy_1 > -treshold && old_y - xy_1 < treshold) { res += xy_1; p++; }
+					if (old_y - xy1  > -treshold && old_y - xy1  < treshold) { res += xy1; p++; }
+
+					res /= p;
+
+					mb->getVertexBuffer()[x + yd].Pos.Y = res;
+
+					/*
 					mb->getVertexBuffer()[x + yd].Pos.Y =
 						(mb->getVertexBuffer()[x-1 + yd].Pos.Y +
 						mb->getVertexBuffer()[x+1 + yd].Pos.Y +
 						mb->getVertexBuffer()[x   + yd - TerrainData.Size].Pos.Y +
-						mb->getVertexBuffer()[x   + yd - TerrainData.Size].Pos.Y) * 0.25f;
+						mb->getVertexBuffer()[x   + yd + TerrainData.Size].Pos.Y) * 0.25f;
+					*/
 				}
 				yd += TerrainData.Size;
 			}
