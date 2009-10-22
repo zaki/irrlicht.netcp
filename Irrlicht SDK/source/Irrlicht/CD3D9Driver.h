@@ -282,6 +282,12 @@ namespace video
 		//! Get Irrlicht color format from D3D color format.
 		ECOLOR_FORMAT getColorFormatFromD3DFormat(D3DFORMAT format) const;
 
+		//! Get D3 specific adapter capability
+		D3DCAPS9& getAdapterCaps() {return Caps;}
+		
+		//! Get D3 specific adapter identification
+		D3DADAPTER_IDENTIFIER9& getAdapterIdent() {return Ident;}
+
 	private:
 
 		//! enumeration for rendering modes such as 2d and 3d for minizing the switching of renderStates.
@@ -387,6 +393,7 @@ namespace video
 		core::rect<s32>* SceneSourceRect;
 
 		D3DCAPS9 Caps;
+		D3DADAPTER_IDENTIFIER9 Ident;
 
 		E_VERTEX_TYPE LastVertexType;
 

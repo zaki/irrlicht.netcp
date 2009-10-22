@@ -191,23 +191,22 @@ bool CD3D9Driver::initDriver(const core::dimension2d<u32>& screenSize,
 	}
 
 	// print device information
-	D3DADAPTER_IDENTIFIER9 dai;
-	if (!FAILED(pID3D->GetAdapterIdentifier(D3DADAPTER_DEFAULT, 0, &dai)))
+	if (!FAILED(pID3D->GetAdapterIdentifier(D3DADAPTER_DEFAULT, 0, &Ident)))
 	{
 		char tmp[512];
 
-		s32 Product = HIWORD(dai.DriverVersion.HighPart);
-		s32 Version = LOWORD(dai.DriverVersion.HighPart);
-		s32 SubVersion = HIWORD(dai.DriverVersion.LowPart);
-		s32 Build = LOWORD(dai.DriverVersion.LowPart);
+		s32 Product = HIWORD(Ident.DriverVersion.HighPart);
+		s32 Version = LOWORD(Ident.DriverVersion.HighPart);
+		s32 SubVersion = HIWORD(Ident.DriverVersion.LowPart);
+		s32 Build = LOWORD(Ident.DriverVersion.LowPart);
 
-		sprintf(tmp, "%s %s %d.%d.%d.%d", dai.Description, dai.Driver, Product, Version,
+		sprintf(tmp, "%s %s %d.%d.%d.%d", Ident.Description, Ident.Driver, Product, Version,
 			SubVersion, Build);
 		os::Printer::log(tmp, ELL_INFORMATION);
 
 		// Assign vendor name based on vendor id.
-		VendorID= static_cast<u16>(dai.VendorId);
-		switch(dai.VendorId)
+		VendorID= static_cast<u16>(Ident.VendorId);
+		switch(Ident.VendorId)
 		{
 			case 0x1002 : VendorName = "ATI Technologies Inc."; break;
 			case 0x10DE : VendorName = "NVIDIA Corporation"; break;
@@ -215,7 +214,7 @@ bool CD3D9Driver::initDriver(const core::dimension2d<u32>& screenSize,
 			case 0x121A : VendorName = "3dfx Interactive Inc"; break;
 			case 0x5333 : VendorName = "S3 Graphics Co., Ltd."; break;
 			case 0x8086 : VendorName = "Intel Corporation"; break;
-			default: VendorName = "Unknown VendorId: ";VendorName += (u32)dai.VendorId; break;
+			default: VendorName = "Unknown VendorId: "; VendorName += (u32)Ident.VendorId; break;
 		}
 	}
 
