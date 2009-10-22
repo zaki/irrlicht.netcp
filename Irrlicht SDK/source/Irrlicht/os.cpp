@@ -64,6 +64,7 @@ namespace os
 	//! prints a debuginfo string
 	void Printer::print(const c8* message)
 	{
+#ifndef QUIET
 #if defined (_WIN32_WCE )
 		core::stringw tmp(message);
 		tmp += L"\n";
@@ -72,6 +73,7 @@ namespace os
 		OutputDebugString(message);
 		OutputDebugString("\n");
 		printf("%s\n", message);
+#endif
 #endif
 	}
 
