@@ -163,14 +163,14 @@ void GuiElem_SetAlignment (IntPtr elem, int *align)
 	                            (EGUI_ALIGNMENT)align[3]);
 }
 
-void GuiElem_SetMaxSize (IntPtr elem, M_DIM2DS size)
+void GuiElem_SetMaxSize (IntPtr elem, M_DIM2DU size)
 {
-	GetElem(elem)->setMaxSize(MU_DIM2DS(size));
+	GetElem(elem)->setMaxSize(MU_DIM2DU(size));
 }
 
-void GuiElem_SetMinSize (IntPtr elem, M_DIM2DS size)
+void GuiElem_SetMinSize (IntPtr elem, M_DIM2DU size)
 {
-	GetElem(elem)->setMinSize(MU_DIM2DS(size));
+	GetElem(elem)->setMinSize(MU_DIM2DU(size));
 }
 
 void GuiElem_SetNotClipped (IntPtr elem, bool noClip)

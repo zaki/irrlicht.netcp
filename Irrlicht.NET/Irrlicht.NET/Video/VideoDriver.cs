@@ -472,9 +472,9 @@ namespace IrrlichtNETCP
             VideoDriver_RenameTexture(_raw, text.Raw, name);
         }
 
-        public void SetFog(Color color, bool linearFog, float start, float end, float density, bool pixelFog, bool rangeFog)
+        public void SetFog(Color color, FogType fogType, float start, float end, float density, bool pixelFog, bool rangeFog)
         {
-            VideoDriver_SetFog(_raw, color.ToUnmanaged(), linearFog, start, end, density, pixelFog, rangeFog);
+            VideoDriver_SetFog(_raw, color.ToUnmanaged(), fogType, start, end, density, pixelFog, rangeFog);
         }
 
         public void SetMaterial(Material mat)
@@ -898,7 +898,7 @@ namespace IrrlichtNETCP
         static extern void VideoDriver_SetAmbientLight(IntPtr videodriver, float[] ambient);
 
          [DllImport(Native.Dll), SuppressUnmanagedCodeSecurity]
-        static extern void VideoDriver_SetFog(IntPtr videodriver, int[] color, bool linear, float start, float end, float density, bool pixel, bool range);
+        static extern void VideoDriver_SetFog(IntPtr videodriver, int[] color, FogType fogType, float start, float end, float density, bool pixel, bool range);
 
          [DllImport(Native.Dll), SuppressUnmanagedCodeSecurity]
         static extern void VideoDriver_SetMaterial(IntPtr videodriver, IntPtr material);
@@ -1001,5 +1001,12 @@ namespace IrrlichtNETCP
         QuadStrip,
         Quads,
         Polygon
+    }
+
+    public enum FogType
+    {
+        Exponential = 0,
+        Linear,
+        Exponential2
     }
 }

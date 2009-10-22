@@ -5,7 +5,7 @@ extern "C"
     EXPORT bool VideoDriver_BeginScene(IntPtr videodriver, bool backBuffer, bool zBuffer, M_SCOLOR color);
     EXPORT void VideoDriver_EndScene(IntPtr videodriver);
 	EXPORT void VideoDriver_EndSceneA(IntPtr videodriver, IntPtr windowId, M_RECT viewRect); 
-    EXPORT IntPtr VideoDriver_AddTexture(IntPtr videodriver, M_DIM2DS size, c8* name, ECOLOR_FORMAT fmt);
+    EXPORT IntPtr VideoDriver_AddTexture(IntPtr videodriver, M_DIM2DU size, c8* name, ECOLOR_FORMAT fmt);
     EXPORT IntPtr VideoDriver_GetTexture(IntPtr videodriver, c8 *name);
 	EXPORT IntPtr VideoDriver_GetGPUProgrammingServices(IntPtr videodriver);
     EXPORT int VideoDriver_GetFPS(IntPtr videodriver);
@@ -15,7 +15,7 @@ extern "C"
 	EXPORT void VideoDriver_ClearZBuffer(IntPtr videodriver);
 	EXPORT IntPtr VideoDriver_CreateImageFromFile(IntPtr videodriver, M_STRING filename);
 	EXPORT IntPtr VideoDriver_AddTextureFromImage(IntPtr videodriver, c8 *name, IntPtr image); 
-	EXPORT IntPtr VideoDriver_CreateRenderTargetTexture(IntPtr videodriver, M_DIM2DS size);
+	EXPORT IntPtr VideoDriver_CreateRenderTargetTexture(IntPtr videodriver, M_DIM2DU size);
 	EXPORT void VideoDriver_Draw2DImage(IntPtr videodriver, IntPtr texture, M_POS2DS destPos, M_RECT sourceRect, M_RECT clipRect, M_SCOLOR color, bool useAlphaChannelOfTexture);
 	EXPORT void VideoDriver_Draw2DImageA(IntPtr videodriver, IntPtr texture, M_POS2DS destPos);
 	EXPORT void VideoDriver_Draw2DImageB(IntPtr videodriver, IntPtr texture, M_POS2DS destPos, M_RECT sourceRect, M_SCOLOR color, bool useAlphaChannelOfTexture);
@@ -28,7 +28,7 @@ extern "C"
 	EXPORT void VideoDriver_Draw3DLine(IntPtr videodriver, M_VECT3DF start, M_VECT3DF end, M_SCOLOR color);
 	EXPORT void VideoDriver_Draw3DTriangle(IntPtr videodriver, M_TRIANGLE3DF tri, M_SCOLOR color);
 	EXPORT E_DRIVER_TYPE VideoDriver_GetDriverType(IntPtr videodriver);
-	EXPORT void VideoDriver_GetScreenSize(IntPtr videodriver, M_DIM2DS size);
+	EXPORT void VideoDriver_GetScreenSize(IntPtr videodriver, M_DIM2DU size);
 	EXPORT void VideoDriver_GetTransform(IntPtr videodriver, E_TRANSFORMATION_STATE state, M_MAT4 mat);
 	EXPORT void VideoDriver_SetTransform(IntPtr videodriver, E_TRANSFORMATION_STATE state, M_MAT4 mat);
 	EXPORT void VideoDriver_DrawIndexedTriangleList(IntPtr videodriver, IntPtr *vertices, int vertexCount, unsigned short *indexList, int triangleCount);
@@ -45,7 +45,7 @@ extern "C"
 	EXPORT void VideoDriver_RemoveAllTextures(IntPtr videodriver);
 	EXPORT void VideoDriver_RemoveTexture(IntPtr videodriver, IntPtr texture);
 	EXPORT void VideoDriver_RenameTexture(IntPtr videodriver, IntPtr texture, c8* name);
-	EXPORT void VideoDriver_SetFog(IntPtr videodriver, M_SCOLOR color, bool linear, float start, float end, float density, bool pixel, bool range);
+	EXPORT void VideoDriver_SetFog(IntPtr videodriver, M_SCOLOR color, E_FOG_TYPE linear, float start, float end, float density, bool pixel, bool range);
 	EXPORT void VideoDriver_SetMaterial(IntPtr videodriver, IntPtr material);
 	EXPORT void VideoDriver_SetRenderTarget(IntPtr videodriver, IntPtr texture, bool cBB, bool cZB, M_SCOLOR color);
 	EXPORT void VideoDriver_SetTextureFlag(IntPtr videodriver, E_TEXTURE_CREATION_FLAG flag, bool enabled);

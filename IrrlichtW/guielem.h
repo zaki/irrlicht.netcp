@@ -31,8 +31,8 @@ extern "C"
 	EXPORT void GuiElem_UpdateAbsolutePosition(IntPtr elem);
 	EXPORT void GuiElem_OnPostRender (IntPtr elem, u32 timeMs);
 	EXPORT void GuiElem_SetAlignment (IntPtr elem, int *align);
-	EXPORT void GuiElem_SetMaxSize (IntPtr elem, M_DIM2DS size);
-	EXPORT void GuiElem_SetMinSize (IntPtr elem, M_DIM2DS size);
+	EXPORT void GuiElem_SetMaxSize (IntPtr elem, M_DIM2DU size);
+	EXPORT void GuiElem_SetMinSize (IntPtr elem, M_DIM2DU size);
 	EXPORT void GuiElem_SetNotClipped (IntPtr elem, bool noClip);
 	EXPORT bool GuiElem_GetNotClipped (IntPtr elem);
 }

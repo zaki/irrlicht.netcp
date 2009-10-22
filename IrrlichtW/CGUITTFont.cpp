@@ -103,7 +103,7 @@ void CGUITTGlyph::cache(u32 idx)
 				}
 				c8 name[128];
 				sprintf(name,"TTFontGlyph%d",idx);
-				video::IImage *img = Driver->createImageFromData(video::ECF_A8R8G8B8,core::dimension2d<s32>(imgw,imgh),texd);
+				video::IImage *img = Driver->createImageFromData(video::ECF_A8R8G8B8,core::dimension2d<u32>(imgw,imgh),texd);
 				bool flg16 = Driver->getTextureCreationFlag(video::ETCF_ALWAYS_16_BIT);
 				bool flg32 = Driver->getTextureCreationFlag(video::ETCF_ALWAYS_32_BIT);
 				bool flgmip = Driver->getTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS);
@@ -169,7 +169,7 @@ void CGUITTGlyph::cache(u32 idx)
 		}
 		c8 name[128];
 		sprintf(name,"TTFontGlyph%d_16",idx);
-		video::IImage *img = Driver->createImageFromData(video::ECF_A1R5G5B5,core::dimension2d<s32>(imgw16,imgh16),texd16);
+		video::IImage *img = Driver->createImageFromData(video::ECF_A1R5G5B5,core::dimension2d<u32>(imgw16,imgh16),texd16);
 		bool flg16 = Driver->getTextureCreationFlag(video::ETCF_ALWAYS_16_BIT);
 		bool flg32 = Driver->getTextureCreationFlag(video::ETCF_ALWAYS_32_BIT);
 		bool flgmip = Driver->getTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS);
@@ -384,9 +384,9 @@ u32 CGUITTFont::getGlyphByChar(wchar_t c)
 }
 
 //! returns the dimension of a text
-core::dimension2d<s32> CGUITTFont::getDimension(const wchar_t* text) const
+core::dimension2d<u32> CGUITTFont::getDimension(const wchar_t* text) const
 {
-	core::dimension2d<s32> dim(0, Glyphs[0].size);
+	core::dimension2d<u32> dim(0, Glyphs[0].size);
 
 	for(const wchar_t* p = text; *p; ++p)
 	{
@@ -417,12 +417,12 @@ inline s32 CGUITTFont::getWidthFromCharacter(wchar_t c) const
 
 
 //! draws an text and clips it to the specified rectangle if wanted
-void CGUITTFont::draw(const wchar_t* text, const core::rect<s32>& position, video::SColor color, bool hcenter, bool vcenter, const core::rect<s32>* clip)
+void CGUITTFont::draw(const core::stringw& text, const core::rect<s32>& position, video::SColor color, bool hcenter, bool vcenter, const core::rect<s32>* clip)
 {
 	if (!Driver)
 		return;
 
-	core::dimension2d<s32> textDimension;
+	core::dimension2d<u32> textDimension;
 	core::position2d<s32> offset = position.UpperLeftCorner;
 	video::SColor colors[4];
 	for (int i = 0;i < 4;i++){
@@ -431,7 +431,7 @@ void CGUITTFont::draw(const wchar_t* text, const core::rect<s32>& position, vide
 
     if (hcenter || vcenter)
 	{
-		textDimension = getDimension(text);
+		textDimension = getDimension(text.c_str());
 
 		if (hcenter)
 			offset.X = ((position.getWidth() - textDimension.Width)>>1) + offset.X;
@@ -442,9 +442,11 @@ void CGUITTFont::draw(const wchar_t* text, const core::rect<s32>& position, vide
 
 	u32 n;
 
-	while(*text)
+	//while(*text)
+	for (u32 i = 0; i < text.size(); i++)
 	{
-		n = getGlyphByChar(*text);
+		wchar_t c = text[i];
+		n = getGlyphByChar(c);
 		if ( n > 0){
 			if (AntiAlias){
 				s32 imgw = Glyphs[n-1].imgw;
@@ -487,17 +489,15 @@ void CGUITTFont::draw(const wchar_t* text, const core::rect<s32>& position, vide
 				Driver->draw2DImage(Glyphs[n-1].tex16,core::position2d<s32>(offset.X+offx,offset.Y+offy),core::rect<s32>(0,0,imgw-1,imgh-1),clip,color,true);
 			}
 // >> Modified for Ver.1.3 begin
-			offset.X += getWidthFromCharacter(*text) + GlobalKerningWidth;
+			offset.X += getWidthFromCharacter(c) + GlobalKerningWidth;
 //			offset.X += getWidthFromCharacter(*text);
 // << Modified for Ver.1.3 end
 		} else {
 // >> Modified for Ver.1.3 begin
-			offset.X += getWidthFromCharacter(*text) + GlobalKerningWidth;
+			offset.X += getWidthFromCharacter(c) + GlobalKerningWidth;
 //			offset.X += getWidthFromCharacter(*text);
 // << Modified for Ver.1.3 end
 		}
-
-		++text;
 	}
 }
 
@@ -550,7 +550,7 @@ scene::ISceneNode *CGUITTFont::createBillboard(const wchar_t* text, core::dimens
 
 	scene::ISceneNode *node = scene->addEmptySceneNode(parent,id);
 
-	core::dimension2d<s32> textDimension;
+	core::dimension2d<u32> textDimension;
 	textDimension = getDimension(text);
 	
 	float scalex = size.Width / textDimension.Width;
@@ -598,6 +598,12 @@ scene::ISceneNode *CGUITTFont::createBillboard(const wchar_t* text, core::dimens
 	}
 
 	return	node;
+}
+
+void CGUITTFont::setInvisibleCharacters(const wchar_t* s)
+{
+	Invisible = s;
+
 }
 #if	0
 

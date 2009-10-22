@@ -35,12 +35,13 @@ namespace IrrlichtNETCP
 			                                                     typeof(GUIColorSelectDialog));
 		}
 		
-		public GUISpinBox AddSpinBox (string text, Rect rectangle, GUIElement parent, int id)
+		public GUISpinBox AddSpinBox (string text, Rect rectangle, bool border, GUIElement parent, int id)
 		{
 			IntPtr par = (parent == null ? IntPtr.Zero : parent.Raw);
 
 			return (GUISpinBox)NativeElement.GetObject(GuiEnv_AddSpinBox(_raw, text,
 			                                                             rectangle.ToUnmanaged(),
+                                                                         border,
 			                                                             par, id), typeof(GUISpinBox));
 		}
 
@@ -384,7 +385,7 @@ namespace IrrlichtNETCP
 		static extern IntPtr GuiEnv_AddColorSelectDialog (IntPtr guienv, string title, bool modal, IntPtr parent, int id);
 		
 		[DllImport(Native.Dll), SuppressUnmanagedCodeSecurity]
-		static extern IntPtr GuiEnv_AddSpinBox (IntPtr guienv, string text, int[] rect, IntPtr parent, int id);		
+		static extern IntPtr GuiEnv_AddSpinBox (IntPtr guienv, string text, int[] rect, bool border, IntPtr parent, int id);		
 		
         #endregion
     }

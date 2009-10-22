@@ -121,9 +121,9 @@ IntPtr GuiEnv_AddColorSelectDialog (IntPtr guienv, M_STRING title, bool modal, I
 	return GetGui(guienv)->addColorSelectDialog (MU_WCHAR(title), modal, (IGUIElement*)parent, id);
 }
 
-IntPtr GuiEnv_AddSpinBox (IntPtr guienv, M_STRING text, M_RECT rectangle, IntPtr parent, int id)
+IntPtr GuiEnv_AddSpinBox (IntPtr guienv, M_STRING text, M_RECT rectangle, bool border, IntPtr parent, int id)
 {
-	return GetGui(guienv)->addSpinBox (MU_WCHAR(text), MU_RECT(rectangle), (IGUIElement*)parent, id);
+	return GetGui(guienv)->addSpinBox (MU_WCHAR(text), MU_RECT(rectangle), border, (IGUIElement*)parent, id);
 }
 
 IntPtr GuiEnv_CreateSkin(IntPtr guienv, EGUI_SKIN_TYPE type)

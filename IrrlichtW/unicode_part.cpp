@@ -43,9 +43,9 @@ int GUIFont_GetCharacterFromPosW(IntPtr font, wchar_t* text, int pixel_x)
 	return ((IGUIFont*)font)->getCharacterFromPos((text), pixel_x);
 }
 
-void GUIFont_GetDimensionW(IntPtr font, wchar_t* text, M_DIM2DS dim)
+void GUIFont_GetDimensionW(IntPtr font, wchar_t* text, M_DIM2DU dim)
 {
-	UM_DIM2DS(((IGUIFont*)font)->getDimension((text)), dim);
+	UM_DIM2DU(((IGUIFont*)font)->getDimension((text)), dim);
 }
 
 int GUIListBox_AddItemW(IntPtr listb, wchar_t* text, int icon)
@@ -123,9 +123,9 @@ IntPtr GuiEnv_AddColorSelectDialogW(IntPtr guienv, wchar_t* title, bool modal, I
 	return GetGui(guienv)->addColorSelectDialog ((title), modal, (IGUIElement*)parent, id);
 }
 
-IntPtr GuiEnv_AddSpinBoxW(IntPtr guienv, wchar_t* text, M_RECT rectangle, IntPtr parent, int id)
+IntPtr GuiEnv_AddSpinBoxW(IntPtr guienv, wchar_t* text, M_RECT rectangle, bool border, IntPtr parent, int id)
 {
-	return GetGui(guienv)->addSpinBox ((text), MU_RECT(rectangle), (IGUIElement*)parent, id);
+	return GetGui(guienv)->addSpinBox ((text), MU_RECT(rectangle), border, (IGUIElement*)parent, id);
 }
 
 IntPtr SceneManager_AddTextSceneNodeW(IntPtr scenemanager, IntPtr font, wchar_t* text, M_SCOLOR color, IntPtr parent)

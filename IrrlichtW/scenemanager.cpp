@@ -89,7 +89,7 @@ IntPtr SceneManager_AddSkyBoxSceneNode(IntPtr scenemanager, IntPtr top, IntPtr b
 
 IntPtr SceneManager_AddTerrainMesh(IntPtr scenemanager, M_STRING meshname, IntPtr texture, IntPtr heightmap, M_DIM2DF stretchSize, float maxHeight, M_DIM2DS defaultVertexBlockSize)
 {
-    return GetSceneFromIntPtr(scenemanager)->addTerrainMesh(meshname, (IImage*)texture, (IImage*) heightmap, MU_DIM2DF(stretchSize), maxHeight, MU_DIM2DS(defaultVertexBlockSize));
+    return GetSceneFromIntPtr(scenemanager)->addTerrainMesh(meshname, (IImage*)texture, (IImage*) heightmap, MU_DIM2DF(stretchSize), maxHeight, MU_DIM2DU(defaultVertexBlockSize));
 }
 
 IntPtr SceneManager_AddTerrainSceneNode(IntPtr scenemanager, M_STRING heightMap, IntPtr parent, int id, M_VECT3DF position, M_VECT3DF rotation, M_VECT3DF scale, M_SCOLOR vertexColor,int maxLOD, E_TERRAIN_PATCH_SIZE patchSize, int smoothFactor)
@@ -114,9 +114,9 @@ IntPtr SceneManager_AddCubeSceneNode(IntPtr scenemanager, float size, IntPtr par
     return GetSceneFromIntPtr(scenemanager)->addCubeSceneNode(size, (ISceneNode*)parent, id);
 }
 
-IntPtr SceneManager_AddSkyDomeSceneNode(IntPtr scenemanager, IntPtr texture, unsigned int  horiRes, unsigned int  vertRes, double  texturePercentage, double  spherePercentage, IntPtr parent)
+IntPtr SceneManager_AddSkyDomeSceneNode(IntPtr scenemanager, IntPtr texture, unsigned int  horiRes, unsigned int  vertRes, double  texturePercentage, double  spherePercentage, double radius, IntPtr parent)
 {
-	return GetSceneFromIntPtr(scenemanager)->addSkyDomeSceneNode((ITexture*)texture, horiRes, vertRes, texturePercentage, spherePercentage, (ISceneNode*)parent);
+	return GetSceneFromIntPtr(scenemanager)->addSkyDomeSceneNode((ITexture*)texture, horiRes, vertRes, texturePercentage, spherePercentage, radius, (ISceneNode*)parent);
 }
 
 IntPtr SceneManager_AddSphereSceneNode(IntPtr scenemanager, float radius, int polycount, IntPtr parent)
@@ -342,16 +342,18 @@ bool SceneCollisionManager_GetCollisionPoint(IntPtr SCM, M_LINE3D ray, IntPtr se
 {
 	triangle3df outtri;
 	vector3df outCol;
-	bool tor = ((ISceneCollisionManager*)SCM)->getCollisionPoint(MU_LINE3D(ray), ((ITriangleSelector*)selector), outCol, outtri);
+	ISceneNode* outNode;
+	bool tor = ((ISceneCollisionManager*)SCM)->getCollisionPoint(MU_LINE3D(ray), ((ITriangleSelector*)selector), outCol, outtri, (const ISceneNode*&)outNode);
 	UM_TRIANGLE3DF(outtri, outtriangle);
 	UM_VECT3DF(outCol, collisionpoint);
 	_FIX_BOOL_MARSHAL_BUG(tor);
 }
 
-void SceneCollisionManager_GetCollisionResultPoint(IntPtr SCM, IntPtr selector, M_VECT3DF ellipsoidPosition, M_VECT3DF ellipsoidRadius, M_VECT3DF ellipsoidDirectionAndSpeed, M_TRIANGLE3DF outTriangle, bool *outFalling, float slidingSpeed, M_VECT3DF gravity, M_VECT3DF outCol)
+void SceneCollisionManager_GetCollisionResultPoint(IntPtr SCM, IntPtr selector, M_VECT3DF ellipsoidPosition, M_VECT3DF ellipsoidRadius, M_VECT3DF ellipsoidDirectionAndSpeed, M_TRIANGLE3DF outTriangle, M_VECT3DF hitPosition, bool &outFalling, float slidingSpeed, M_VECT3DF gravity, M_VECT3DF outCol)
 {
 	irr::core::triangle3df outtri;
-	UM_VECT3DF(((ISceneCollisionManager*)SCM)->getCollisionResultPosition((ITriangleSelector*)selector, MU_VECT3DF(ellipsoidPosition), MU_VECT3DF(ellipsoidRadius), MU_VECT3DF(ellipsoidDirectionAndSpeed), outtri, *outFalling, slidingSpeed, MU_VECT3DF(gravity)), outCol);
+	ISceneNode* outNode;
+	UM_VECT3DF(((ISceneCollisionManager*)SCM)->getCollisionResultPosition((ITriangleSelector*)selector, MU_VECT3DF(ellipsoidPosition), MU_VECT3DF(ellipsoidRadius), MU_VECT3DF(ellipsoidDirectionAndSpeed), outtri, MU_VECT3DF(hitPosition), outFalling, (const ISceneNode*&)outNode, slidingSpeed, MU_VECT3DF(gravity)), outCol);
 }
 
 void SceneCollisionManager_GetRayFromScreenCoordinates(IntPtr SCM, M_POS2DS pos, IntPtr camera, M_LINE3D outRay)

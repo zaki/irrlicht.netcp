@@ -189,6 +189,12 @@ void UM_DIM2DS(irr::core::dimension2d<int> base, M_DIM2DS t)
     t[1] = base.Height;
 }
 
+void UM_DIM2DU(irr::core::dimension2d<unsigned int> base, M_DIM2DU t)
+{
+    t[0] = base.Width;
+    t[1] = base.Height;
+}
+
 void UM_DIM2US(irr::core::dimension2d<uint> base, M_DIM2US t)
 {
     t[0] = base.Width;

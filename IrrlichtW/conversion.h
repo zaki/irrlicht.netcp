@@ -47,8 +47,11 @@ extern "C" { EXPORT void Pointer_SafeRelease_TS(IntPtr pointer); }
 //Between Managed and Unmanaged code.
 //PS : UM means Unmanaged => Managed and MU means Managed => Unmanaged
 #define M_DIM2DS int*
+#define M_DIM2DU unsigned int*
 #define MU_DIM2DS(val) irr::core::dimension2d<s32>(val[0], val[1])
+#define MU_DIM2DU(val) irr::core::dimension2d<u32>(val[0], val[1])
 void UM_DIM2DS(irr::core::dimension2d<int> base, M_DIM2DS t);
+void UM_DIM2DU(irr::core::dimension2d<unsigned int> base, M_DIM2DU t);
 
 #define M_DIM2US int*
 #define MU_DIM2US(val) irr::core::dimension2d<u32>(val[0], val[1])

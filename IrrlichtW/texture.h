@@ -4,7 +4,7 @@ extern "C"
 {
     EXPORT ECOLOR_FORMAT Texture_GetColorFormat(IntPtr texture);
     EXPORT E_DRIVER_TYPE Texture_GetDriverType(IntPtr texture);
-    EXPORT void Texture_GetOriginalSize(IntPtr texture, M_DIM2DS toR);
+    EXPORT void Texture_GetOriginalSize(IntPtr texture, M_DIM2DU toR);
     EXPORT s32 Texture_GetPitch(IntPtr texture);
 	EXPORT void Texture_RegenerateMipMapLevels(IntPtr texture);
 	EXPORT IntPtr Texture_Lock(IntPtr texture);

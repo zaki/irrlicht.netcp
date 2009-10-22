@@ -37,8 +37,8 @@ public:
     		VOID_S(REMOVE_CHILD, IGUIElement::removeChild((IGUIElement*)arg1))
     		VOID_S(SET_ENABLED, IGUIElement::setEnabled(arg2));
     		VOID_S(SET_ID, IGUIElement::setID(arg2))
-    		VOID_S(SET_MAX_SIZE, IGUIElement::setMaxSize(MU_DIM2DS(arg4)))
-    		VOID_S(SET_MIN_SIZE, IGUIElement::setMinSize(MU_DIM2DS(arg4)))
+    		VOID_S(SET_MAX_SIZE, IGUIElement::setMaxSize(MU_DIM2DU(arg4)))
+    		VOID_S(SET_MIN_SIZE, IGUIElement::setMinSize(MU_DIM2DU(arg4)))
     		VOID_S(SET_NOT_CLIPPED, IGUIElement::setNotClipped(arg2))
     		VOID_S(SET_VISIBLE, IGUIElement::setVisible(arg2))
     		VOID_S(UPDATE_ABSOLUTE_POSITION, IGUIElement::updateAbsolutePosition())

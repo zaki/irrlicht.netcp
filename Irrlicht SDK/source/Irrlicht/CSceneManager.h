@@ -7,6 +7,7 @@
 
 #include "ISceneManager.h"
 #include "ISceneNode.h"
+#include "CTreeSceneNode.h"
 #include "ICursorControl.h"
 #include "irrString.h"
 #include "irrArray.h"
@@ -260,6 +261,17 @@ namespace scene
 			video::SColor vertexColor = video::SColor(255,255,255,255),
 			s32 maxLOD=4, E_TERRAIN_PATCH_SIZE patchSize=ETPS_17,s32 smoothFactor=0,
 			bool addAlsoIfHeightmapEmpty=false);
+
+		virtual CTreeSceneNode* addTreeSceneNode(
+			const io::path& treeXMLFileName,
+			ISceneNode* parent=0, s32 id=-1,
+			const core::vector3df& position = core::vector3df(0.0f,0.0f,0.0f),
+			const core::vector3df& rotation = core::vector3df(0.0f,0.0f,0.0f),
+			const core::vector3df& scale = core::vector3df(1.0f,1.0f,1.0f),
+			irr::video::ITexture* TreeTexture = 0,
+			irr::video::ITexture* LeafTexture = 0,
+			irr::video::ITexture* BillTexture = 0
+			);
 
 		//! Adds a dummy transformation scene node to the scene graph.
 		virtual IDummyTransformationSceneNode* addDummyTransformationSceneNode(

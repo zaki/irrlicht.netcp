@@ -281,17 +281,17 @@ irr::u32 MeshCache_GetMeshCount (IntPtr mc)
 
 M_STRING MeshCache_GetMeshFilename (IntPtr mc, IntPtr mesh)
 {
-	return UM_STRING(GetMeshCacheFromIntPtr(mc)->getMeshFilename(static_cast<irr::scene::IMesh*>(mesh)));
+	return UM_STRING(GetMeshCacheFromIntPtr(mc)->getMeshFilename(static_cast<irr::scene::IMesh*>(mesh)).c_str());
 }
 
 M_STRING MeshCache_GetMeshFilenameA (IntPtr mc, IntPtr mesh)
 {
-	return UM_STRING(GetMeshCacheFromIntPtr(mc)->getMeshFilename(static_cast<irr::scene::IAnimatedMesh*>(mesh)));
+	return UM_STRING(GetMeshCacheFromIntPtr(mc)->getMeshFilename(static_cast<irr::scene::IAnimatedMesh*>(mesh)).c_str());
 }
 
 M_STRING MeshCache_GetMeshFilenameN (IntPtr mc, irr::u32 index)
 {
-	return UM_STRING(GetMeshCacheFromIntPtr(mc)->getMeshFilename(index));
+	return UM_STRING(GetMeshCacheFromIntPtr(mc)->getMeshFilename(index).c_str());
 }
 
 irr::s32 MeshCache_GetMeshIndex (IntPtr mc, IntPtr mesh)

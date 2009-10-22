@@ -15,9 +15,9 @@ E_DRIVER_TYPE Texture_GetDriverType(IntPtr texture)
     return GetTextureFromPtr(texture)->getDriverType();
 }
 
-void Texture_GetOriginalSize(IntPtr texture, M_DIM2DS toR)
+void Texture_GetOriginalSize(IntPtr texture, M_DIM2DU toR)
 {
-    UM_DIM2DS(GetTextureFromPtr(texture)->getOriginalSize(), toR);
+	UM_DIM2DU(GetTextureFromPtr(texture)->getOriginalSize(), toR);
 }
 
 s32 Texture_GetPitch(IntPtr texture)

@@ -371,13 +371,13 @@ namespace IrrlichtNETCP
         /// <param name="spherePercentage">How much of the sphere is drawn. Value should be between 0 and 2, where 1 is an exact half-sphere and 2 is a full sphere. </param>
         /// <param name="parent">Parent scene node of the dome. A dome usually has no parent, so this should be null. Note: If a parent is set, the dome will not change how it is drawn.</param>
         /// <returns>The scene node</returns>
-        public SceneNode AddSkyDomeSceneNode(Texture texture, uint horiRes, uint vertRes, double texturePercentage, double spherePercentage, SceneNode parent)
+        public SceneNode AddSkyDomeSceneNode(Texture texture, uint horiRes, uint vertRes, double texturePercentage, double spherePercentage, double radius, SceneNode parent)
 		{
 			IntPtr par = IntPtr.Zero;
 			if(parent != null)
 				par = parent.Raw;
 			return (SceneNode)
-                NativeElement.GetObject(SceneManager_AddSkyDomeSceneNode(_raw, texture.Raw, horiRes, vertRes, texturePercentage, spherePercentage, par),
+                NativeElement.GetObject(SceneManager_AddSkyDomeSceneNode(_raw, texture.Raw, horiRes, vertRes, texturePercentage, spherePercentage, radius, par),
 										typeof(SceneNode));
 		}
 
@@ -1013,7 +1013,7 @@ namespace IrrlichtNETCP
         static extern IntPtr SceneManager_AddCubeSceneNode(IntPtr scenemanager, float size, IntPtr parent, int id);
 
          [DllImport(Native.Dll), SuppressUnmanagedCodeSecurity]
-        static extern IntPtr SceneManager_AddSkyDomeSceneNode(IntPtr scenemanager, IntPtr texture, uint horiRes, uint vertRes, double texturePercentage, double spherePercentage, IntPtr parent);
+        static extern IntPtr SceneManager_AddSkyDomeSceneNode(IntPtr scenemanager, IntPtr texture, uint horiRes, uint vertRes, double texturePercentage, double spherePercentage, double radius, IntPtr parent);
 
          [DllImport(Native.Dll), SuppressUnmanagedCodeSecurity]
         static extern IntPtr SceneManager_AddSphereSceneNode(IntPtr scenemanager, float radius, int polycount, IntPtr parent);

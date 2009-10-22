@@ -222,9 +222,9 @@ int GUIFont_GetCharacterFromPos(IntPtr font, M_STRING text, int pixel_x)
 	return ((IGUIFont*)font)->getCharacterFromPos(MU_WCHAR(text), pixel_x);
 }
 
-void GUIFont_GetDimension(IntPtr font, M_STRING text, M_DIM2DS dim)
+void GUIFont_GetDimension(IntPtr font, M_STRING text, M_DIM2DU dim)
 {
-	UM_DIM2DS(((IGUIFont*)font)->getDimension(MU_WCHAR(text)), dim);
+	UM_DIM2DU(((IGUIFont*)font)->getDimension(MU_WCHAR(text)), dim);
 }
 
 

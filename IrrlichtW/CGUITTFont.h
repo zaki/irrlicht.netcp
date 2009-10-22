@@ -95,10 +95,10 @@ public:
 	bool attach(CGUITTFace *Face,u32 size);
 
 	//! draws an text and clips it to the specified rectangle if wanted
-	virtual void draw(const wchar_t* text, const core::rect<s32>& position, video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<s32>* clip=0);
+	virtual void draw(const core::stringw& text, const core::rect<s32>& position, video::SColor color, bool hcenter=false, bool vcenter=false, const core::rect<s32>* clip=0);
 
 	//! returns the dimension of a text
-	virtual core::dimension2d<s32> getDimension(const wchar_t* text) const;
+	virtual core::dimension2d<u32> getDimension(const wchar_t* text) const;
 
 	//! Calculates the index of the character in the text which is on a specific position.
 	virtual s32 getCharacterFromPos(const wchar_t* text, s32 pixel_x) const;
@@ -115,6 +115,8 @@ public:
 
 	scene::ISceneNode *createBillboard(const wchar_t* text, core::dimension2d<f32> size, scene::ISceneManager *scene,scene::ISceneNode *parent,s32 id);
 
+	virtual void irr::gui::IGUIFont::setInvisibleCharacters(const wchar_t *);
+
 	bool AntiAlias;
 	bool TransParency;
 	bool attached;
@@ -127,6 +129,8 @@ private:
 // >> Add for Ver.1.3 begin
 	s32 GlobalKerningWidth, GlobalKerningHeight;
 // << Add for Ver.1.3 end
+
+	core::stringw Invisible;
 };
 
 } // end namespace gui

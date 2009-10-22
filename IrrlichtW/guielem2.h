@@ -49,7 +49,7 @@ extern "C"
 
 	EXPORT void GUIFont_Draw(IntPtr font, M_STRING text, M_RECT pos, M_SCOLOR color, bool hcenter, bool vcenter, M_RECT clip);
 	EXPORT int GUIFont_GetCharacterFromPos(IntPtr font, M_STRING text, int pixel_x);
-	EXPORT void GUIFont_GetDimension(IntPtr font, M_STRING text, M_DIM2DS dim);
+	EXPORT void GUIFont_GetDimension(IntPtr font, M_STRING text, M_DIM2DU dim);
 
 	EXPORT void GUIImage_SetImage(IntPtr image, IntPtr texture);
 	EXPORT void GUIImage_SetUseAlphaChannel(IntPtr image, bool use);

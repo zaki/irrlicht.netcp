@@ -24,10 +24,10 @@ extern "C"
     EXPORT void Device_SetCallback(IntPtr device, EVENTCALLBACK);
 
     EXPORT int VideoModeList_GetDesktopDepth(IntPtr videomodelist);
-    EXPORT void VideoModeList_GetDesktopResolution(IntPtr videomodelist, M_DIM2DS res);
+    EXPORT void VideoModeList_GetDesktopResolution(IntPtr videomodelist, M_DIM2DU res);
     EXPORT int VideoModeList_GetVideoModeCount(IntPtr videomodelist);
     EXPORT int VideoModeList_GetVideoModeDepth(IntPtr videomodelist, int mode);
-    EXPORT void VideoModeList_GetVideoModeResolution(IntPtr videomodelist, int mode, M_DIM2DS res);
+    EXPORT void VideoModeList_GetVideoModeResolution(IntPtr videomodelist, int mode, M_DIM2DU res);
 
     EXPORT void FileSystem_AddFolderFileArchive(IntPtr system, M_STRING folder, bool ignoreCase, bool ignorePaths);
     EXPORT void FileSystem_AddZipFileArchive(IntPtr system,M_STRING filename, bool ignoreCase, bool ignorePaths);

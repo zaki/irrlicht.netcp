@@ -21,9 +21,9 @@ void VideoDriver_EndSceneA(IntPtr videodriver, IntPtr windowId, M_RECT viewRect)
     GetVideoFromIntPtr(videodriver)->endScene();//windowId, &r
 }
 
-IntPtr VideoDriver_AddTexture(IntPtr videodriver, M_DIM2DS size, c8* name, ECOLOR_FORMAT fmt)
+IntPtr VideoDriver_AddTexture(IntPtr videodriver, M_DIM2DU size, c8* name, ECOLOR_FORMAT fmt)
 {
-    return GetVideoFromIntPtr(videodriver)->addTexture(MU_DIM2DS(size), name, fmt);
+    return GetVideoFromIntPtr(videodriver)->addTexture(MU_DIM2DU(size), name, fmt);
 }
 
 IntPtr VideoDriver_AddTextureFromImage(IntPtr videodriver, c8* name, IntPtr image)
@@ -71,9 +71,9 @@ IntPtr VideoDriver_CreateImageFromFile(IntPtr videodriver, M_STRING filename)
 	return GetVideoFromIntPtr(videodriver)->createImageFromFile(filename);
 }
 
-IntPtr VideoDriver_CreateRenderTargetTexture(IntPtr videodriver, M_DIM2DS size)
+IntPtr VideoDriver_CreateRenderTargetTexture(IntPtr videodriver, M_DIM2DU size)
 {	
-	return GetVideoFromIntPtr(videodriver)->addRenderTargetTexture(MU_DIM2DS(size));
+	return GetVideoFromIntPtr(videodriver)->addRenderTargetTexture(MU_DIM2DU(size));
 }
 
 void VideoDriver_Draw2DImage(IntPtr videodriver, IntPtr texture, M_POS2DS destPos, M_RECT sourceRect, M_RECT clipRect, M_SCOLOR color, bool useAlphaChannelOfTexture)
@@ -148,9 +148,9 @@ void VideoDriver_Draw3DTriangle(IntPtr videodriver, M_TRIANGLE3DF tri, M_SCOLOR 
 	GetVideoFromIntPtr(videodriver)->draw3DTriangle(MU_TRIANGLE3DF(tri), MU_SCOLOR(color));
 }
 
-void VideoDriver_GetScreenSize(IntPtr videodriver, M_DIM2DS size)
+void VideoDriver_GetScreenSize(IntPtr videodriver, M_DIM2DU size)
 {
-	UM_DIM2DS(GetVideoFromIntPtr(videodriver)->getScreenSize(), size);
+	UM_DIM2DU(GetVideoFromIntPtr(videodriver)->getScreenSize(), size);
 }
 
 void VideoDriver_DrawIndexedTriangleList(IntPtr videodriver, IntPtr *vertices, int vertexCount, unsigned short *indexList, int triangleCount)
@@ -300,9 +300,9 @@ void VideoDriver_SetTransform(IntPtr videodriver, E_TRANSFORMATION_STATE state, 
 	GetVideoFromIntPtr(videodriver)->setTransform(state, MU_MAT4(mat));
 }
 
-void VideoDriver_SetFog(IntPtr videodriver, M_SCOLOR color, bool linear, float start, float end, float density, bool pixel, bool range)
+void VideoDriver_SetFog(IntPtr videodriver, M_SCOLOR color, E_FOG_TYPE fogType, float start, float end, float density, bool pixel, bool range)
 {
-	GetVideoFromIntPtr(videodriver)->setFog(MU_SCOLOR(color), linear, start, end, density, pixel, range);
+	GetVideoFromIntPtr(videodriver)->setFog(MU_SCOLOR(color), fogType, start, end, density, pixel, range);
 }
 void VideoDriver_SetMaterial(IntPtr videodriver, IntPtr material)
 {

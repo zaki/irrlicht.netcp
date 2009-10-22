@@ -9,7 +9,7 @@ extern "C"
 	EXPORT void GUIContextMenu_SetItemTextW(IntPtr menu, int index, wchar_t* text);
 	EXPORT void GUIFont_DrawW(IntPtr font, wchar_t* text, M_RECT pos, M_SCOLOR color, bool hcenter, bool vcenter, M_RECT clip);
 	EXPORT int GUIFont_GetCharacterFromPosW(IntPtr font, wchar_t* text, int pixel_x);
-	EXPORT void GUIFont_GetDimensionW(IntPtr font, wchar_t* text, M_DIM2DS dim);
+	EXPORT void GUIFont_GetDimensionW(IntPtr font, wchar_t* text, M_DIM2DU dim);
 	EXPORT int GUIListBox_AddItemW(IntPtr listb, wchar_t* text, int icon);
 	EXPORT int GUIListBox_AddItemAW(IntPtr listb, wchar_t* text);
 	EXPORT IntPtr GUITabControl_AddTabW(IntPtr tabc, wchar_t* caption, int id);
@@ -25,7 +25,7 @@ extern "C"
 	EXPORT IntPtr GuiEnv_AddStaticTextW(IntPtr guienv, wchar_t* text, M_RECT rectangle, bool border, bool wordWrap, IntPtr parent, int id, bool fillBack);
 	EXPORT IntPtr GuiEnv_AddWindowW(IntPtr guienv, M_RECT rectangle, bool modal, wchar_t* text, IntPtr parent, int id);
 	EXPORT IntPtr GuiEnv_AddColorSelectDialogW(IntPtr guienv, wchar_t* title, bool modal, IntPtr parent, int id);
-	EXPORT IntPtr GuiEnv_AddSpinBoxW(IntPtr guienv, wchar_t* text, M_RECT rectangle, IntPtr parent, int id);
+	EXPORT IntPtr GuiEnv_AddSpinBoxW(IntPtr guienv, wchar_t* text, M_RECT rectangle, bool border, IntPtr parent, int id);
 	EXPORT IntPtr SceneManager_AddTextSceneNodeW(IntPtr scenemanager, IntPtr font, wchar_t* text, M_SCOLOR color, IntPtr parent);
 	EXPORT IntPtr SceneManager_AddTextSceneNode2W(IntPtr scenemanager, IntPtr font, wchar_t* text, IntPtr parent,  M_DIM2DF size, M_VECT3DF pos, int ID, M_SCOLOR shade_top, M_SCOLOR shade_down);
 	EXPORT void TextSceneNode_SetTextW(IntPtr text, wchar_t* ctext);

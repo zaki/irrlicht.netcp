@@ -129,7 +129,7 @@ bool Device_IsWindowActive(IntPtr device)
 
 void Device_SetResizeable(IntPtr device, bool resizeable)
 {
-     GetDeviceFromIntPtr(device)->setResizeAble(resizeable);
+	GetDeviceFromIntPtr(device)->setResizable(resizeable);
 }
 
 void Device_SetCallback(IntPtr device, EVENTCALLBACK call)
@@ -144,9 +144,9 @@ int VideoModeList_GetDesktopDepth(IntPtr videomodelist)
     return ((IVideoModeList*)videomodelist)->getDesktopDepth();
 }
 
-void VideoModeList_GetDesktopResolution(IntPtr videomodelist, M_DIM2DS res)
+void VideoModeList_GetDesktopResolution(IntPtr videomodelist, M_DIM2DU res)
 {
-    UM_DIM2DS(((IVideoModeList*)videomodelist)->getDesktopResolution(), res);
+    UM_DIM2DU(((IVideoModeList*)videomodelist)->getDesktopResolution(), res);
 }
 
 int VideoModeList_GetVideoModeCount(IntPtr videomodelist)
@@ -159,9 +159,9 @@ int VideoModeList_GetVideoModeDepth(IntPtr videomodelist, int mode)
     return ((IVideoModeList*)videomodelist)->getVideoModeDepth(mode);
 }
 
-void VideoModeList_GetVideoModeResolution(IntPtr videomodelist, int mode, M_DIM2DS res)
+void VideoModeList_GetVideoModeResolution(IntPtr videomodelist, int mode, M_DIM2DU res)
 {
-    UM_DIM2DS(((IVideoModeList*)videomodelist)->getVideoModeResolution(mode), res);
+    UM_DIM2DU(((IVideoModeList*)videomodelist)->getVideoModeResolution(mode), res);
 }
 
 void FileSystem_AddFolderFileArchive(IntPtr system,M_STRING folder, bool ignoreCase, bool ignorePaths)
@@ -191,7 +191,7 @@ bool FileSystem_ExistsFile(IntPtr system, M_STRING filename)
 
 M_STRING FileSystem_GetWorkingDirectory(IntPtr system)
 {
-    return UM_STRING(((IFileSystem*)system)->getWorkingDirectory());
+    return UM_STRING(((IFileSystem*)system)->getWorkingDirectory().c_str());
 }
 
 IntPtr FileSystem_CreateAndWriteFile(IntPtr system, M_STRING filename, bool append)
@@ -291,12 +291,12 @@ int FileList_GetFileCount(IntPtr list)
 
 M_STRING FileList_GetFileName(IntPtr list, int index)
 {
-    return UM_STRING(((IFileList*)list)->getFileName(index));
+	return UM_STRING(((IFileList*)list)->getFileName(index).c_str());
 }
 
 M_STRING FileList_GetFullFileName(IntPtr list, int index)
 {
-    return (M_STRING)((IFileList*)list)->getFullFileName(index);
+	return (M_STRING)((IFileList*)list)->getFullFileName(index).c_str();
 }
 
 bool FileList_IsDirectory(IntPtr list, int index)
