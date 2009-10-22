@@ -282,6 +282,10 @@ void CMeshSceneNode::setMesh(IMesh* mesh)
 {
 	if (!mesh)
 		return; // won't set null mesh
+	if (mesh==Mesh) {
+		copyMaterials();
+		return;
+	}
 
     mesh->grab();
 	if (Mesh)
