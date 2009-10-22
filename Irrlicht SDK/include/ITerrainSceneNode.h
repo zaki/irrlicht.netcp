@@ -156,6 +156,10 @@ namespace scene
 			video::SColor vertexColor=video::SColor(255,255,255,255),
 			s32 smoothFactor=0) =0;
 
+		virtual bool addHeightMap(f32* data, u32 width,
+			video::SColor vertexColor=video::SColor(255,255,255,255),
+			s32 smoothFactor=0) =0;
+
 		//! Initializes the terrain data.  Loads the vertices from the heightMapFile.
 		/** The data is interpreted as (signed) integers of the given bit size or
 		floats (with 32bits, signed). Allowed bitsizes for integers are
