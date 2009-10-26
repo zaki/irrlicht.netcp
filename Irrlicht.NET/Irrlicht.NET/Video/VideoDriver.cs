@@ -724,7 +724,7 @@ namespace IrrlichtNETCP
                 return CD3D9Driver_GetAdapterPixelShaderVersion(_raw);
             }
         }
-
+#if !LINUX
         public Microsoft.DirectX.Direct3D.Device AdapterDevice
         {
             get
@@ -732,7 +732,7 @@ namespace IrrlichtNETCP
                 return (new Microsoft.DirectX.Direct3D.Device(CD3D9Driver_GetD3DDevice9(_raw)));
             }
         }
-
+#endif
         [DllImport(Native.Dll), SuppressUnmanagedCodeSecurity]
         static extern uint CD3D9Driver_GetAdapterVendorId(IntPtr videodriver);
 
