@@ -252,6 +252,8 @@ namespace scene
 		Mesh.MeshBuffers.clear();
 		const u32 startTime = os::Timer::getRealTime();
 
+		TerrainData.Size = (s32)width;
+
 		switch (TerrainData.PatchSize)
 		{
 			case ETPS_9:
