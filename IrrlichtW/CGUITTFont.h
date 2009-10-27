@@ -115,7 +115,7 @@ public:
 
 	scene::ISceneNode *createBillboard(const wchar_t* text, core::dimension2d<f32> size, scene::ISceneManager *scene,scene::ISceneNode *parent,s32 id);
 
-	virtual void irr::gui::IGUIFont::setInvisibleCharacters(const wchar_t *);
+	virtual void setInvisibleCharacters(const wchar_t *);
 
 	bool AntiAlias;
 	bool TransParency;

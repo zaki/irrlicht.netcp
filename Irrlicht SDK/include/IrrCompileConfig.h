@@ -190,8 +190,9 @@ the engine will no longer read .jpeg images. */
 //! Define _IRR_USE_NON_SYSTEM_JPEG_LIB_ to let irrlicht use the jpeglib which comes with irrlicht.
 /** If this is commented out, Irrlicht will try to compile using the jpeg lib installed in the system.
 	This is only used when _IRR_COMPILE_WITH_LIBJPEG_ is defined. */
+#if !defined(_IRR_LINUX_PLATFORM_)
 #define _IRR_USE_NON_SYSTEM_JPEG_LIB_
-
+#endif
 
 //! Define _IRR_COMPILE_WITH_LIBPNG_ to enable compiling the engine using libpng.
 /** This enables the engine to read png images. If you comment this out,
@@ -201,8 +202,9 @@ the engine will no longer read .png images. */
 //! Define _IRR_USE_NON_SYSTEM_LIBPNG_ to let irrlicht use the libpng which comes with irrlicht.
 /** If this is commented out, Irrlicht will try to compile using the libpng installed in the system.
 	This is only used when _IRR_COMPILE_WITH_LIBPNG_ is defined. */
+#if !defined(_IRR_LINUX_PLATFORM_)
 #define _IRR_USE_NON_SYSTEM_LIB_PNG_
-
+#endif
 
 //! Define _IRR_D3D_NO_SHADER_DEBUGGING to disable shader debugging in D3D9
 /** If _IRR_D3D_NO_SHADER_DEBUGGING is undefined in IrrCompileConfig.h,

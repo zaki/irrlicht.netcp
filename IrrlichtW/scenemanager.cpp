@@ -352,8 +352,20 @@ bool SceneCollisionManager_GetCollisionPoint(IntPtr SCM, M_LINE3D ray, IntPtr se
 void SceneCollisionManager_GetCollisionResultPoint(IntPtr SCM, IntPtr selector, M_VECT3DF ellipsoidPosition, M_VECT3DF ellipsoidRadius, M_VECT3DF ellipsoidDirectionAndSpeed, M_TRIANGLE3DF outTriangle, M_VECT3DF hitPosition, bool &outFalling, float slidingSpeed, M_VECT3DF gravity, M_VECT3DF outCol)
 {
 	irr::core::triangle3df outtri;
+	irr::core::vector3df outhitpos;
 	ISceneNode* outNode;
-	UM_VECT3DF(((ISceneCollisionManager*)SCM)->getCollisionResultPosition((ITriangleSelector*)selector, MU_VECT3DF(ellipsoidPosition), MU_VECT3DF(ellipsoidRadius), MU_VECT3DF(ellipsoidDirectionAndSpeed), outtri, MU_VECT3DF(hitPosition), outFalling, (const ISceneNode*&)outNode, slidingSpeed, MU_VECT3DF(gravity)), outCol);
+	UM_VECT3DF(((ISceneCollisionManager*)SCM)->getCollisionResultPosition(
+		(ITriangleSelector*)selector, 
+		(const irr::core::vector3df&)MU_VECT3DF(ellipsoidPosition), 
+		(const irr::core::vector3df&)MU_VECT3DF(ellipsoidRadius), 
+		(const irr::core::vector3df&)MU_VECT3DF(ellipsoidDirectionAndSpeed), 
+		outtri, 
+		outhitpos,
+		outFalling, 
+		(const ISceneNode*&)outNode, 
+		slidingSpeed, 
+		(const irr::core::vector3df&)MU_VECT3DF(gravity)), 
+		outCol);
 }
 
 void SceneCollisionManager_GetRayFromScreenCoordinates(IntPtr SCM, M_POS2DS pos, IntPtr camera, M_LINE3D outRay)

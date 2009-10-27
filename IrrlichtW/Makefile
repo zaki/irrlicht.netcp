@@ -9,7 +9,8 @@
 default: all
 
 IRR_SDK_INCLUDE_PATH=../Irrlicht\ SDK/include
-IRR_SDK_LIB=../Irrlicht\ SDK/lib/Linux
+#IRR_SDK_LIB=../Irrlicht\ SDK/lib/Linux
+IRR_SDK_LIB=../bin/Release
 IRR_LIB_NAME=IrrlichtW
 IRR_LIB_NAME_DEBUG=IrrlichtWd
 
@@ -19,7 +20,7 @@ RELEASE_PATH=../bin/Release
 COMPILER=$(CC)
 CFLAGS = -g -O3
 FLAGS = $(CFLAGS) -I $(IRR_SDK_INCLUDE_PATH) -I/usr/include -I/usr/include/freetype2
-LDFLAGS=-L/usr/X11R6/lib -lGLU -lGL -lfreetype -lXxf86vm ../Irrlicht\ SDK/lib/Linux/libIrrlicht.a
+LDFLAGS=-L/usr/X11R6/lib -lGLU -lGL -lfreetype -lXxf86vm $(IRR_SDK_LIB)/libIrrlicht.a
 
 IRR_SRC= \
 	animatedmesh.cpp \
@@ -44,7 +45,8 @@ IRR_SRC= \
 	customfont.cpp \
 	videodriver.cpp \
 	skinnedmesh.cpp \
-	customgui.cpp
+	customgui.cpp \
+	unicode_part.cpp
 
 IRR_SRC_OBJECTS=$(IRR_SRC:.cpp=.o)
 
