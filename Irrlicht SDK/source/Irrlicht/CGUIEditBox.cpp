@@ -12,6 +12,10 @@
 #include "rect.h"
 #include "os.h"
 #include "Keycodes.h"
+// >> Add code for i18n START
+#include <stdlib.h>
+#include <locale.h>
+// << Add code for i18n END
 
 /*
 	todo:
@@ -262,9 +266,24 @@ bool CGUIEditBox::processKey(const SEvent& event)
 				const s32 realmbgn = MarkBegin < MarkEnd ? MarkBegin : MarkEnd;
 				const s32 realmend = MarkBegin < MarkEnd ? MarkEnd : MarkBegin;
 
-				core::stringc s;
-				s = Text.subString(realmbgn, realmend - realmbgn).c_str();
-				Operator->copyToClipboard(s.c_str());
+// >> Modified code for i18n START
+
+				char* old_locale = setlocale(LC_ALL, NULL);
+				setlocale(LC_ALL,"");
+
+				int len = wcstombs(NULL,Text.subString(realmbgn, realmend - realmbgn).c_str(),MB_CUR_MAX);
+				c8 *ms = new c8[len + 1];
+				len = wcstombs(ms,Text.subString(realmbgn, realmend - realmbgn).c_str(),len);
+				ms[len] = 0;
+				Operator->copyToClipboard(ms);
+				delete ms;
+
+				setlocale(LC_ALL, old_locale);
+
+//				core::stringc s;
+//				s = Text.subString(realmbgn, realmend - realmbgn).c_str();
+//				Operator->copyToClipboard(s.c_str());
+// << Modified code for i18n END
 			}
 			break;
 		case KEY_KEY_X:
@@ -275,9 +294,22 @@ bool CGUIEditBox::processKey(const SEvent& event)
 				const s32 realmend = MarkBegin < MarkEnd ? MarkEnd : MarkBegin;
 
 				// copy
-				core::stringc sc;
-				sc = Text.subString(realmbgn, realmend - realmbgn).c_str();
-				Operator->copyToClipboard(sc.c_str());
+// >> Modified code for i18n START
+				char* old_locale = setlocale(LC_ALL, NULL);
+				setlocale(LC_ALL,"");
+
+				int len = wcstombs(NULL,Text.subString(realmbgn, realmend - realmbgn).c_str(),MB_CUR_MAX);
+				c8 *ms = new c8[len + 1];
+				len = wcstombs(ms,Text.subString(realmbgn, realmend - realmbgn).c_str(),len);
+				ms[len] = 0;
+				Operator->copyToClipboard(ms);
+				delete ms;
+
+				setlocale(LC_ALL, old_locale);
+//				core::stringc sc;
+//				sc = Text.subString(realmbgn, realmend - realmbgn).c_str();
+//				Operator->copyToClipboard(sc.c_str());
+// << Modified code for i18n END
 
 				if (IsEnabled)
 				{
@@ -308,17 +340,31 @@ bool CGUIEditBox::processKey(const SEvent& event)
 				const c8* p = Operator->getTextFromClipboard();
 				if (p)
 				{
+// >> Add code for i18n START
+					char* old_locale = setlocale(LC_ALL, NULL);
+
+					setlocale(LC_ALL,"");
+					wchar_t *wp = new wchar_t[strlen(p) + 1];
+					int len = mbstowcs(wp,p,strlen(p));
+					wp[len] = 0;
+// << Add code for i18n END
 					if (MarkBegin == MarkEnd)
 					{
 						// insert text
 						core::stringw s = Text.subString(0, CursorPos);
-						s.append(p);
+// >> Modified code for i18n START
+						s.append(wp);
+//						s.append(p);
+// << Modified code for i18n END
 						s.append( Text.subString(CursorPos, Text.size()-CursorPos) );
 
 						if (!Max || s.size()<=Max) // thx to Fish FH for fix
 						{
 							Text = s;
-							s = p;
+// >> Modified code for i18n START
+							s = wp;
+//							s = p;
+// << Modified code for i18n END
 							CursorPos += s.size();
 						}
 					}
@@ -327,16 +373,26 @@ bool CGUIEditBox::processKey(const SEvent& event)
 						// replace text
 
 						core::stringw s = Text.subString(0, realmbgn);
-						s.append(p);
+// >> Modified code for i18n START
+						s.append(wp);
+//						s.append(p);
+// << Modified code for i18n END
 						s.append( Text.subString(realmend, Text.size()-realmend) );
 
 						if (!Max || s.size()<=Max)  // thx to Fish FH for fix
 						{
 							Text = s;
-							s = p;
+// >> Modified code for i18n START
+							s = wp;
+//							s = p;
+// << Modified code for i18n END
 							CursorPos = realmbgn + s.size();
 						}
 					}
+// >> Add code for i18n START
+					delete wp;
+					setlocale(LC_ALL, old_locale);
+// << Add code for i18n END
 				}
 
 				newMarkBegin = 0;
@@ -675,6 +731,19 @@ bool CGUIEditBox::processKey(const SEvent& event)
 
 	calculateScrollPos();
 
+// >> Add code for i18n START
+
+	IGUIFont* font = OverrideFont;
+	IGUISkin* skin = Environment->getSkin();
+	if (!OverrideFont)
+		font = skin->getFont();
+
+	// set Input Conpositon spot
+	dev->focusIn();
+	core::position2di ICPos = calculateICPos();
+	dev->updateICSpot(ICPos.X, ICPos.Y,	font->getDimension(L"|").Height);
+
+// << Add code for i18n END
 	return true;
 }
 
@@ -941,6 +1010,12 @@ u32 CGUIEditBox::getMax() const
 
 bool CGUIEditBox::processMouse(const SEvent& event)
 {
+// >> Add code for i18n START
+	IGUIFont* font = OverrideFont;
+	IGUISkin* skin = Environment->getSkin();
+	if (!OverrideFont)
+		font = skin->getFont();
+// << Add code for i18n END
 	switch(event.MouseInput.Event)
 	{
 	case irr::EMIE_LMOUSE_LEFT_UP:
@@ -953,6 +1028,13 @@ bool CGUIEditBox::processMouse(const SEvent& event)
 			}
 			MouseMarking = false;
 			calculateScrollPos();
+// >> Add code for i18n START
+
+			dev->focusIn();
+			core::position2di ICPos = calculateICPos();
+			dev->updateICSpot(ICPos.X, ICPos.Y,	font->getDimension(L"|").Height);
+
+// << Add code for i18n END
 			return true;
 		}
 		break;
@@ -963,6 +1045,13 @@ bool CGUIEditBox::processMouse(const SEvent& event)
 				CursorPos = getCursorPos(event.MouseInput.X, event.MouseInput.Y);
 				setTextMarkers( MarkBegin, CursorPos );
 				calculateScrollPos();
+// >> Add code for i18n START
+
+				dev->focusIn();
+				core::position2di ICPos = calculateICPos();
+				dev->updateICSpot(ICPos.X, ICPos.Y,	font->getDimension(L"|").Height);
+
+// << Add code for i18n END
 				return true;
 			}
 		}
@@ -996,6 +1085,13 @@ bool CGUIEditBox::processMouse(const SEvent& event)
 				MouseMarking = true;
 				setTextMarkers( newMarkBegin, CursorPos);
 				calculateScrollPos();
+// >> Add code for i18n START
+
+				dev->focusIn();
+				core::position2di ICPos = calculateICPos();
+				dev->updateICSpot(ICPos.X, ICPos.Y,	font->getDimension(L"|").Height);
+
+// << Add code for i18n END
 				return true;
 			}
 		}
@@ -1348,6 +1444,32 @@ void CGUIEditBox::calculateScrollPos()
 
 	// todo: adjust scrollbar
 }
+
+// >> Add code for i18n START
+core::position2di CGUIEditBox::calculateICPos()
+{
+	core::position2di pos;
+	IGUIFont* font = OverrideFont;
+	IGUISkin* skin = Environment->getSkin();
+	if (!OverrideFont)
+		font = skin->getFont();
+
+	//drop the text that clipping on the right side
+	if(WordWrap | MultiLine)
+	{
+		pos.X = CurrentTextRect.LowerRightCorner.X - font->getDimension(Text.subString(CursorPos, BrokenTextPositions[getLineFromPos(CursorPos)] + BrokenText[getLineFromPos(CursorPos)].size() - CursorPos).c_str()).Width;
+		pos.Y = CurrentTextRect.UpperLeftCorner.Y + font->getDimension(L"|").Height + (Border ? 3 : 0) - ((MultiLine | WordWrap) ? 3 : 0);
+
+	}
+	else
+	{
+		pos.X = CurrentTextRect.LowerRightCorner.X - font->getDimension(Text.subString(CursorPos, Text.size() - CursorPos).c_str()).Width;
+		pos.Y = AbsoluteRect.getCenter().Y + (Border ? 3 : 0); //bug? The text is always drawn in the height of the center. SetTextAlignment() doesn't influence.
+	}
+
+	return pos;
+}
+// >> Add code for i18n END
 
 //! set text markers
 void CGUIEditBox::setTextMarkers(s32 begin, s32 end)

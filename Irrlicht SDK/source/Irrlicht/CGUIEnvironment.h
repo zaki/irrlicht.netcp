@@ -250,6 +250,12 @@ public:
 	//! reads an element
 	virtual void readGUIElement(io::IXMLReader* reader, IGUIElement* node);
 
+	//!
+	virtual void setDevice(void *device);
+
+	//!
+	virtual IGUIFont* getFont(const io::path filename, u32 fontsize, bool antialias = false, bool transparency = false);
+
 private:
 
 	IGUIElement* getNextElement(bool reverse=false, bool group=false);

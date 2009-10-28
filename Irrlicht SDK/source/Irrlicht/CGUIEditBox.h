@@ -122,6 +122,11 @@ namespace gui
 		//! set text markers
 		void setTextMarkers(s32 begin, s32 end);
 
+// >> Add code for i18n START
+		//! calcutates the current Input Conpositon Position; 
+		core::position2di calculateICPos();
+// << Add code for i18n END
+
 		bool processKey(const SEvent& event);
 		bool processMouse(const SEvent& event);
 		s32 getCursorPos(s32 x, s32 y);

@@ -16,6 +16,12 @@
 #include "COSOperator.h"
 #include "dimension2d.h"
 #include <winuser.h>
+// >> add by zgock for Multilingual start
+#include <stdlib.h>
+#include <locale.h>
+#include <imm.h>
+#pragma comment(lib, "imm32.lib")
+// << add by zgock for Multilingual end
 
 namespace irr
 {
@@ -263,6 +269,54 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			dev->postEventFromUser(event);
 
 		return 0;
+// Hack the hell out of the WM_IME_CHAR that isn't there
+	case WM_CHAR:
+		{
+			if (lParam == 0x1)
+			{
+				char* old_locale = setlocale(LC_ALL, NULL);
+				setlocale(LC_ALL,"");
+				event.EventType = irr::EET_KEY_INPUT_EVENT;
+				event.KeyInput.PressedDown = true;
+				dev = getDeviceFromHWnd(hWnd);
+				event.KeyInput.Char = (wchar_t)wParam;
+				event.KeyInput.Key = irr::KEY_ACCEPT;
+				event.KeyInput.Shift = 0;
+				event.KeyInput.Control = 0;
+				if (dev)
+					dev->postEventFromUser(event);
+				setlocale(LC_ALL, old_locale);
+			}
+			return  0;
+		}
+	case WM_IME_CHAR:
+		{
+			char* old_locale = setlocale(LC_ALL, NULL);
+
+			setlocale(LC_ALL,"Japanese");		// FIXME: Use default locale!!!
+			event.EventType = irr::EET_KEY_INPUT_EVENT;
+			event.KeyInput.PressedDown = true;
+			dev = getDeviceFromHWnd(hWnd);
+			unsigned char mbc[3];
+			wchar_t wc[2];
+			if(wParam > 255){
+				mbc[0] = wParam >> 8;
+				mbc[1] = wParam & 0xff;
+				mbc[2] = 0;
+			}else{
+				mbc[0] = wParam;
+				mbc[1] = mbc[2] = 0;
+			}
+			int x = mbstowcs(wc, (char *)&mbc, MB_CUR_MAX );
+			event.KeyInput.Char = wc[0]; //KeyAsc >= 0 ? KeyAsc : 0;
+			event.KeyInput.Key = irr::KEY_ACCEPT;
+			event.KeyInput.Shift = 0;
+			event.KeyInput.Control = 0;
+			if (dev)	dev->postEventFromUser(event);
+
+			setlocale(LC_ALL, old_locale);
+			return	0;
+		}
 	}
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
@@ -293,13 +347,13 @@ CIrrDeviceWin32::CIrrDeviceWin32(const SIrrlichtCreationParameters& params)
 	// create the window if we need to and we do not use the null device
 	if (!CreationParams.WindowId && CreationParams.DriverType != video::EDT_NULL)
 	{
-		const c8* ClassName = "CIrrDeviceWin32";
+		const wchar_t* ClassName = L"CIrrDeviceWin32";
 
 		// Register Class
-		WNDCLASSEX wcex;
+		WNDCLASSEXW wcex;
 		wcex.cbSize		= sizeof(WNDCLASSEX);
 		wcex.style		= CS_HREDRAW | CS_VREDRAW;
-		wcex.lpfnWndProc	= WndProc;
+		wcex.lpfnWndProc	= (WNDPROC)WndProc;
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;
 		wcex.hInstance		= hInstance;
@@ -313,7 +367,7 @@ CIrrDeviceWin32::CIrrDeviceWin32(const SIrrlichtCreationParameters& params)
 		// if there is an icon, load it
 		wcex.hIcon = (HICON)LoadImage(hInstance, "irrlicht.ico", IMAGE_ICON, 0,0, LR_LOADFROMFILE);
 
-		RegisterClassEx(&wcex);
+		RegisterClassExW(&wcex);
 
 		// calculate client size
 
@@ -344,7 +398,7 @@ CIrrDeviceWin32::CIrrDeviceWin32(const SIrrlichtCreationParameters& params)
 
 		// create window
 
-		HWnd = CreateWindow( ClassName, "", style, windowLeft, windowTop,
+		HWnd = CreateWindowW( ClassName, L"", style, windowLeft, windowTop,
 					realWidth, realHeight, NULL, NULL, hInstance, NULL);
 		CreationParams.WindowId = HWnd;
 
@@ -387,6 +441,8 @@ CIrrDeviceWin32::CIrrDeviceWin32(const SIrrlichtCreationParameters& params)
 	em.irrDev = this;
 	em.hWnd = HWnd;
 	EnvMap.push_back(em);
+
+	//GUIEnvironment->setDevice(this);
 
 	// set this as active window
 	SetActiveWindow(HWnd);
@@ -517,14 +573,14 @@ bool CIrrDeviceWin32::run()
 
 	bool quit = false;
 
-	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 
 		if (ExternalWindow && msg.hwnd == HWnd)
 			WndProc(HWnd, msg.message, msg.wParam, msg.lParam);
 		else
-			DispatchMessage(&msg);
+			DispatchMessageW(&msg);
 
 		if (msg.message == WM_QUIT)
 			quit = true;
@@ -940,7 +996,7 @@ void CIrrDeviceWin32::setResizable(bool resize)
 	else
 		style = WS_THICKFRAME | WS_SYSMENU | WS_CAPTION | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 
-	if (!SetWindowLongPtr(HWnd, GWL_STYLE, style))
+	if (!SetWindowLongPtrW(HWnd, GWL_STYLE, style))
 		os::Printer::log("Could not change window style.");
 
 	RECT clientSize;
@@ -1153,6 +1209,33 @@ bool CIrrDeviceWin32::getGammaRamp( f32 &red, f32 &green, f32 &blue, f32 &bright
 	return r;
 
 }
+
+// >> add by uirou for IME Window start
+void CIrrDeviceWin32::updateICSpot(short x, short y, short height){
+
+	HIMC hIMC = ImmGetContext(HWnd);
+    //LOGFONT lf;
+    COMPOSITIONFORM cf;
+    /* Set font for IME */
+    //GetObject(hFont, sizeof(LOGFONT), &lf);
+    //ImmSetCompositionFont(hIMC, &lf);
+    /* Set preedit position */
+
+	cf.dwStyle = CFS_POINT;
+    cf.ptCurrentPos.x = x;
+    cf.ptCurrentPos.y = y - height;
+    ImmSetCompositionWindow(hIMC, &cf);
+
+  /* get info. for debug */
+    //ImmGetCompositionWindow(hIMC, &cf);
+    //ImmGetCompositionFont(hIMC, &lf);
+    //ImmGetDescription(hIMC, buf, sizeof(buf));
+
+     ImmReleaseContext(HWnd, hIMC);
+
+}
+// << add by uirou for IME Window end
+
 
 } // end namespace
 

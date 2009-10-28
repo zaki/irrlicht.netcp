@@ -242,6 +242,12 @@ namespace irr
 		used. */
 		virtual E_DEVICE_TYPE getType() const = 0;
 
+// >> Add by uirou for IME Window start
+		virtual void focusIn(){};
+		virtual void focusOut(){};
+		virtual void updateICSpot(short x, short y, short height){};
+// << Add by uirou for IME Window end
+
 		//! Check if a driver type is supported by the engine.
 		/** Even if true is returned the driver may not be available
 		for a configuration requested when creating the device. */

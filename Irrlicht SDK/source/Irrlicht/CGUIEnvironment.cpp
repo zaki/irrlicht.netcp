@@ -37,6 +37,9 @@
 #include "CGUIToolBar.h"
 #include "CGUITable.h"
 
+// >> add by uirou for IME Window start
+#include "IrrCompileConfig.h"
+// << add by uirou for IME Window end
 #include "CDefaultGUIElementFactory.h"
 #include "IWriteFile.h"
 #include "IXMLWriter.h"
@@ -151,6 +154,15 @@ CGUIEnvironment::~CGUIEnvironment()
 	for (i=0; i<Fonts.size(); ++i)
 		Fonts[i].Font->drop();
 
+// >> add by zgock for Multilingual start
+/*
+	for (i=0; i<TTFonts.size(); ++i)
+		TTFonts[i].Font->drop();
+
+	for (i=0; i<Faces.size(); ++i)
+		Faces[i].Face->drop();
+*/
+// << add by zgock for Multilingual end
 	// remove all factories
 	for (i=0; i<GUIElementFactoryList.size(); ++i)
 		GUIElementFactoryList[i]->drop();
@@ -1322,7 +1334,13 @@ IGUIFont* CGUIEnvironment::getFont(const io::path& filename)
 	IGUIFont* ifont=0;
 	f.Filename = filename;
 
+// >> add by uirou for Multilingual start
+#ifndef LINUX
+// << add by uirou for Multilingual end
 	f.Filename.make_lower();
+// >> add by uirou for Multilingual start
+#endif
+// << add by uirou for Multilingual end
 
 	s32 index = Fonts.binary_search(f);
 	if (index != -1)
@@ -1543,6 +1561,16 @@ IGUIElement* CGUIEnvironment::getNextElement(bool reverse, bool group)
 		return 0;
 }
 
+IGUIFont* CGUIEnvironment::getFont(const io::path filename, u32 fontsize, bool antialias, bool transparency)
+{
+	return getFont(filename);
+}
+
+void CGUIEnvironment::setDevice(void* device)
+{
+	dev = (irr::IrrlichtDevice*)device;
+}
+
 
 //! creates an GUI Environment
 IGUIEnvironment* createGUIEnvironment(io::IFileSystem* fs,
@@ -1551,7 +1579,6 @@ IGUIEnvironment* createGUIEnvironment(io::IFileSystem* fs,
 {
 	return new CGUIEnvironment(fs, Driver, op);
 }
-
 
 } // end namespace gui
 } // end namespace irr
