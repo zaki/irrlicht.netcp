@@ -234,6 +234,7 @@ namespace IrrlichtNETCP
 		GUIEvent,
 		MouseInputEvent,
 		KeyInputEvent,
+        JoystickInputEvent,
 		LogTextEvent,
 		UserEvent
 	}
@@ -247,7 +248,9 @@ namespace IrrlichtNETCP
 		RMouseLeftUp,
 		MMouseLeftUp,
 		MouseMoved,
-		MouseWheel
+		MouseWheel,
+        MouseDoubleClick,
+        MouseTripleClick
 	}
 	
 	public enum GUIEventType

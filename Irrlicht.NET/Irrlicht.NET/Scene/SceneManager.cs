@@ -1196,6 +1196,7 @@ namespace IrrlichtNETCP
 		MoveBackward,
 		StrafeLeft,
 		StrafeRight,
-		JumpUp
+		JumpUp,
+        Crouch
 	}
 }

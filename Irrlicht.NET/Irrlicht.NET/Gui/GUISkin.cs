@@ -127,6 +127,10 @@ namespace IrrlichtNETCP
         MessageBoxHeight,
         ButtonWidth,
         ButtonHeight,
+        TextDistanceX,
+        TextDistanceY,
+        TitlebarTextDistanceX,
+        TitlebarTextDistanceY,
         Count
     }
 
@@ -136,6 +140,10 @@ namespace IrrlichtNETCP
         MessageBoxCancel,
         MessageBoxYes,
         MessageBoxNo,
+        WindowClose,
+        WindowMaximize,
+        WindowMinimize,
+        WindowRestore,
         Count
     }
 
@@ -156,8 +164,12 @@ namespace IrrlichtNETCP
         InactiveBorder,
         InactiveCaption,
         ToolTip,
+        ToolTipBackground,
         Scrollbar,
         Window,
+        WindowSymbol,
+        Icon,
+        IconHighlight,
         Count
     }
     

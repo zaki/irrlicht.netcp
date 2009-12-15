@@ -391,12 +391,14 @@ namespace IrrlichtNETCP
         ModalScreen,
         ScrollBar,
         ProgressBar,
+        SpinBox,
         StaticText,
         Tab,
         TabControl,
+        Table,
         ToolBar,
+        TreeView,
         Window,
-		SpinBox,
 		Count,
 		Element
     }

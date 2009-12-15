@@ -45,6 +45,9 @@ namespace IrrlichtNETCP
         //! OBJ mesh writer for .obj files
         EMWT_OBJ = 0x006A626F, // MAKE_IRR_ID('o', 'b', 'j', 0)
 
+        //! PLY mesh writer for .ply files
+        EMWT_PLY = 0x00796C70 //MAKE_IRR_ID('p', 'l', 'y', 0)
+
     }
 
     // TODO FIXME: can multiple flags be combined when using an enum like this? If not, use an int.

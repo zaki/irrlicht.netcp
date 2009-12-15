@@ -26,7 +26,14 @@ using System;
  		A1R5G5B5,
  		R5G6B5,
  		R8G8B8,
- 		A8R8G8B8
+ 		A8R8G8B8,
+        R16F,
+        G16R16F,
+        A16B16G16R16F,
+        R32F,
+        G32R32F,
+        A32B32G32R32F,
+        Unknown
  	}
  	
  	public enum MaterialType
@@ -59,31 +66,37 @@ using System;
  	
  	public enum MaterialFlag
  	{
- 		Wireframe,
-        PointCloud,
- 		GouraudShading,
- 		Lighting,
- 		ZBuffer,
- 		ZWriteEnable,
- 		BackFaceCulling,
- 		BilinearFilter,
- 		TrilinearFilter,
- 		AnisotropicFilter,
- 		FogEnable,
- 		NormalizeNormals,
-        TextureWrap,
- 		MaterialFlagCount //Do not use
+ 		Wireframe = 0x1,
+        PointCloud = 0x2,
+ 		GouraudShading = 0x4,
+ 		Lighting = 0x8,
+ 		ZBuffer = 0x10,
+ 		ZWriteEnable = 0x20,
+ 		BackFaceCulling = 0x40,
+        FrontFaceCulling = 0x80,
+ 		BilinearFilter = 0x100,
+ 		TrilinearFilter = 0x200,
+ 		AnisotropicFilter = 0x400,
+ 		FogEnable = 0x800,
+ 		NormalizeNormals = 0x1000,
+        TextureWrap = 0x2000,
+        AntiAliasing = 0x4000,
+        ColorMask = 0x8000,
+        ColorMaterial = 0x10000,
+ 		MaterialFlagCount = 17 //Do not use
  	}
  	
  	public enum SceneNodeRenderPass
  	{
- 		Camera,
-        Light,
- 		SkyBox,
- 		Automatic,
- 		Solid,
- 		Shadow,
- 		Transparent,
+ 		None = 0,
+        Camera = 1,
+        Light = 2,
+ 		SkyBox = 4,
+ 		Automatic = 24,
+ 		Solid = 8,
+ 		Shadow = 64,
+ 		Transparent = 16,
+        TransparentEffect = 32,
         Shader0,
         Shader1,
         Shader2,
@@ -95,7 +108,7 @@ using System;
         Shader8,
         Shader9,
         Shader10,
- 		Count //Do not use
+ 		Count = 20 //Do not use
  	}
  	
  	public enum SceneNodeType

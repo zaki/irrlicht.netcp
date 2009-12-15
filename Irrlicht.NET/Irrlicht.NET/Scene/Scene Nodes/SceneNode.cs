@@ -501,8 +501,8 @@ namespace IrrlichtNETCP
     public enum CullingType
     {
         Off = 0,
-        Box,
-        FrustumBox,
-        FrustumSphere
+        Box = 1,
+        FrustumBox = 2,
+        FrustumSphere = 4
     }
 }

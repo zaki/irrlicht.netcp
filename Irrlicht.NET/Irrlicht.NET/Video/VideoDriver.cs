@@ -948,7 +948,9 @@ namespace IrrlichtNETCP
         Always32Bit = 0x00000002,
         OptimizedForQuality = 0x00000004,
         OptimizedForSpeed = 0x00000008,
-        CreateMipMaps = 0x00000010
+        CreateMipMaps = 0x00000010,
+        NoAlphaChannel = 0x00000020,
+        AllowNonPower2 = 0x00000040
     }
 
     public enum VideoDriverFeature
@@ -973,8 +975,12 @@ namespace IrrlichtNETCP
         ARB_FragmentProgram_1,
         ARB_GLSL,
         HLSL,
+        TextureNSQUARE,
         TextureNPOT,
         FrameBufferObject,
+        VertexBufferObject,
+        AlphaToCoverage,
+        ColorMask,
         Count
     }
 
@@ -997,10 +1003,12 @@ namespace IrrlichtNETCP
         LineLoop,
         Lines,
         TriangleStrip,
+        TriangleFan,
         Triangles,
         QuadStrip,
         Quads,
-        Polygon
+        Polygon,
+        PointSprites
     }
 
     public enum FogType
