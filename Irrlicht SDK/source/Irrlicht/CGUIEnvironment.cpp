@@ -1214,6 +1214,10 @@ IGUIEditBox* CGUIEnvironment::addEditBox(const wchar_t* text,
 	IGUIEditBox* d = new CGUIEditBox(text, border, this,
 			parent ? parent : this, id, rectangle);
 
+// >> add by uirou for IME Window start
+	d->setDevice(dev);
+// << add by uirou for IME Window end
+
 	d->drop();
 	return d;
 }

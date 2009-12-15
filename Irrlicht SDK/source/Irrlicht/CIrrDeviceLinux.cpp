@@ -114,6 +114,8 @@ CIrrDeviceLinux::CIrrDeviceLinux(const SIrrlichtCreationParameters& param)
 		return;
 
 	createGUIAndScene();
+
+	GUIEnvironment->setDevice(this);
 }
 
 

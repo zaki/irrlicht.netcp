@@ -442,7 +442,7 @@ CIrrDeviceWin32::CIrrDeviceWin32(const SIrrlichtCreationParameters& params)
 	em.hWnd = HWnd;
 	EnvMap.push_back(em);
 
-	//GUIEnvironment->setDevice(this);
+	GUIEnvironment->setDevice(this);
 
 	// set this as active window
 	SetActiveWindow(HWnd);

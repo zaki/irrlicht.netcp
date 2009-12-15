@@ -9,6 +9,7 @@
 #include "IImagePresenter.h"
 #include "SIrrCreationParameters.h"
 #include "CVideoModeList.h"
+#include "IGUIEnvironment.h"
 
 namespace irr
 {
@@ -18,7 +19,6 @@ namespace irr
 
 	namespace gui
 	{
-		class IGUIEnvironment;
 		IGUIEnvironment* createGUIEnvironment(io::IFileSystem* fs,
 			video::IVideoDriver* Driver, IOSOperator* op);
 	}
