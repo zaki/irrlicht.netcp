@@ -263,16 +263,26 @@ namespace IrrlichtNETCP
 		ListBoxChanged,
 		ListBoxSelectedAgain,
 		FileSelected,
+        DirectorySelected,
 		FileChooseDialogCancelled,
 		MessageBoxYes,
 		MessageBoxNo,
 		MessageBoxOK,
 		MessageBoxCancel,
 		EditBoxEnter,
+        EditBoxChanged,
+        EditBoxMarkingChanged,
 		TabChanged,
 		MenuItemSelected,
 		ComboBoxChanged,
-		SpinBoxChanged
+        SpinBoxChanged,
+        TableChanged,
+        TableHeaderChanged,
+        TableSelectedAgain,
+        TreeviewNodeDeselect,
+        TreeviewNodeSelect,
+        TreeviewNodeExpand,
+        TreeviewNodeCollapse
 	}
 	
 	public enum KeyCode
