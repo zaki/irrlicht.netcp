@@ -16,6 +16,7 @@
 #include "ESceneNodeTypes.h"
 #include "ESceneNodeAnimatorTypes.h"
 #include "EMeshWriterEnums.h"
+#include "EMaterialTypes.h"
 #include "SceneParameters.h"
 #include "IGeometryCreator.h"
 #include "ISkinnedMesh.h"
@@ -845,7 +846,8 @@ namespace scene
 			  const core::vector3df& scale = core::vector3df(1.0f,1.0f,1.0f),
 			  irr::video::ITexture* TreeTexture = 0,
 			  irr::video::ITexture* LeafTexture = 0,
-			  irr::video::ITexture* BillTexture = 0
+			  irr::video::ITexture* BillTexture = 0,
+			  s32 LeafMaterial = (s32)irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL
 			  ) = 0;
 
 		//! Adds a quake3 scene node to the scene graph.
